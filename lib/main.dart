@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:waktuku/database/database_helper.dart';
+import 'package:waktuku/logic/database.dart';
 import 'package:waktuku/model/prayer_time.dart';
-import 'package:waktuku/parse.dart';
+import 'package:waktuku/logic/controller.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,7 +33,7 @@ class Test extends StatefulWidget {
 }
 
 class TestState extends State<Test> {
-  ESolatParser parser = ESolatParser();
+  PrayerTimeController parser = PrayerTimeController();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String>(
@@ -49,13 +49,13 @@ class TestState extends State<Test> {
         }).toList();
         PrayerTimeData cur =
             data.singleWhere((i) => i.date.contains(formatted));
-        DatabaseHelper.instance.ptInsert("SGR03", cur);
+        DatabaseHelper.getInstance.ptInsert("SGR03", cur);
         // return
         return FutureBuilder<int>(
-          future: DatabaseHelper.instance.ptInsert("SGR03", cur),
+          future: DatabaseHelper.getInstance.ptInsert("SGR03", cur),
           builder: (BuildContext c2, AsyncSnapshot<int> s2) {
             return FutureBuilder<int>(
-              future: DatabaseHelper.instance.ptRowCount(),
+              future: DatabaseHelper.getInstance.ptRowCount(),
               builder: (BuildContext c3, AsyncSnapshot<int> s3) {
                 return Text(s3.data.toString());
               },

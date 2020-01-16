@@ -1,6 +1,6 @@
 import 'package:http/http.dart';
 
-class ESolatParser {
+class PrayerTimeController {
   // field
   String url =
       "https://www.e-solat.gov.my/index.php?r=esolatApi/takwimsolat&period=year";
