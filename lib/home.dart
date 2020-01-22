@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:waktuku/about.dart';
+import 'package:waktuku/zone.dart';
 
 Color appThemeColor = Color.fromARGB(255, 39, 174, 96);
 
@@ -13,8 +15,9 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   Widget timeCard(String salatTime, String time) {
-    bool isCurrentSalatTime =
-        (DateFormat("HH:mm").parse(time).isBefore(DateTime.now())) ? true : false;
+    DateTime timeNow = DateFormat('kk:mm').parse(DateFormat('kk:mm').format(DateTime.now()));
+    DateTime timeSalat = DateFormat('kk:mm').parse(time);
+    bool isCurrentSalatTime = (timeSalat.isBefore(timeNow)) ? true : false;
     return Card(
       elevation: 0,
       child: Container(
@@ -50,14 +53,24 @@ class HomePageState extends State<HomePage> {
               FontAwesomeIcons.mapMarker,
               color: appThemeColor,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ZonePage()),
+              );
+            },
           ),
           IconButton(
             icon: Icon(
               FontAwesomeIcons.info,
               color: appThemeColor,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AboutPage()),
+              );
+            },
           ),
         ],
         backgroundColor: Colors.white,
