@@ -1,6 +1,7 @@
 class PrayerTimeData {
   // field
   String hijri;
+  String zone;
   String date;
   String day;
   String imsak;
@@ -13,6 +14,7 @@ class PrayerTimeData {
   // method
   PrayerTimeData(
       {this.hijri,
+      this.zone,
       this.date,
       this.day,
       this.imsak,
@@ -26,6 +28,7 @@ class PrayerTimeData {
   factory PrayerTimeData.fromJson(Map<String, dynamic> parsedJson) {
     return PrayerTimeData(
       hijri: parsedJson['hijri'],
+      zone: parsedJson['zone'],
       date: parsedJson['date'],
       day: parsedJson['day'],
       imsak: parsedJson['imsak'],
