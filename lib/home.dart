@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+
 import 'package:waktuku/about.dart';
 import 'package:waktuku/zone.dart';
-
-Color appThemeColor = Color.fromARGB(255, 39, 174, 96);
+import 'package:waktuku/logic/common.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -27,8 +27,7 @@ class HomePageState extends State<HomePage> {
             Text(salatTime),
             Text(
               time,
-              style: TextStyle(
-                  fontSize: 25, color: (isCurrentSalatTime) ? appThemeColor : Colors.black),
+              style: TextStyle(fontSize: 25, color: (isCurrentSalatTime) ? appThemeColor : Colors.black),
             ),
           ],
         ),

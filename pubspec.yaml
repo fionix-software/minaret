@@ -16,7 +16,6 @@ dependencies:
   html: ^0.14.0
   path_provider: ^1.5.1
   # components (third party)
-  bloc: ^3.0.0
   tuple: ^1.0.3
   sqflite: ^1.2.0
   font_awesome_flutter: ^8.5.0

@@ -1,1 +1,0 @@
-enum StatusEnum { GOOD, NOT_GOOD }

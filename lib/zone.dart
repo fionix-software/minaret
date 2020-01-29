@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:waktuku/home.dart';
+
+import 'package:waktuku/logic/common.dart';
 
 class ZonePage extends StatefulWidget {
   @override
@@ -15,7 +16,10 @@ class ZonePageState extends State<ZonePage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(FontAwesomeIcons.arrowLeft, color: appThemeColor,),
+          icon: Icon(
+            FontAwesomeIcons.arrowLeft,
+            color: appThemeColor,
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },

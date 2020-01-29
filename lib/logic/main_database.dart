@@ -2,16 +2,16 @@ import 'dart:io';
 
 import 'package:tuple/tuple.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:waktuku/logic/common_enum.dart';
+import 'package:waktuku/logic/common.dart';
 import 'package:path_provider/path_provider.dart';
 
 abstract class DatabaseItemBase {
   // basic
-  StatusEnum create(Database db);
-  StatusEnum delete(Database db, int id);
-  StatusEnum insert(Database db, Map<String, dynamic> data);
+  ErrorStatus create(Database db);
+  ErrorStatus delete(Database db, int id);
+  ErrorStatus insert(Database db, Map<String, dynamic> data);
   // templated
-  Tuple2<StatusEnum, A> getList<A>(Database db);
+  Tuple2<ErrorStatus, A> getList<A>(Database db);
 }
 
 class DatabaseHelper {

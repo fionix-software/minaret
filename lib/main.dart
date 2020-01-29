@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+
+import 'package:waktuku/about.dart';
 import 'package:waktuku/home.dart';
+import 'package:waktuku/check.dart';
+import 'package:waktuku/zone.dart';
 
 void main() => runApp(MainApp());
 
@@ -10,7 +14,13 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Varela',
       ),
-      home: HomePage(),
+      initialRoute: '/check',
+      routes: {
+        '/about': (_) => AboutPage(),
+        '/home': (_) => HomePage(),
+        '/check': (_) => CheckingPage(),
+        '/zone': (_) => ZonePage(),
+      },
     );
   }
 }
