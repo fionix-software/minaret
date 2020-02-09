@@ -1,10 +1,13 @@
+import 'dart:developer';
+
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:tuple/tuple.dart';
 
-import 'package:waktuku/logic/main_database.dart';
 import 'package:waktuku/logic/common.dart';
+import 'package:waktuku/model/prayer_time_data.dart';
 
-class DatabaseItemPrayerTime extends DatabaseItemBase {
+class DatabaseItemPrayerTime {
   final String ptTable = "_prayer_time_data";
   final String ptId = "id";
   final String ptDate = "date";
@@ -19,10 +22,10 @@ class DatabaseItemPrayerTime extends DatabaseItemBase {
   final String ptMaghrib = "maghrib";
   final String ptIsha = "isha";
 
-  @override
-  ErrorStatus create(Database db) {
-    ErrorStatus returnStatus = ErrorStatus.ERROR;
-    db.execute('''
+  Future<ErrorStatusEnum> create(Database db) async {
+    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
+    try {
+      await db.execute('''
       CREATE TABLE $ptTable (
         $ptId INTEGER PRIMARY KEY,
         $ptDate TEXT,
@@ -36,37 +39,61 @@ class DatabaseItemPrayerTime extends DatabaseItemBase {
         $ptAsr TEXT,
         $ptMaghrib TEXT,
         $ptIsha TEXT
-      )
-    ''').then((onValue) {
-      returnStatus = ErrorStatus.OK;
-    });
+      );
+    ''');
+    } catch (e) {
+      returnStatus = ErrorStatusEnum.ERROR;
+    }
     return returnStatus;
   }
 
-  @override
-  ErrorStatus delete(Database db, int id) {
-    ErrorStatus returnStatus = ErrorStatus.ERROR;
-    db.delete(ptTable, where: "$ptId=?", whereArgs: [id.toString()]).then((onValue) {
-      if (onValue == 1) {
-        returnStatus = ErrorStatus.OK;
-      }
-    });
+  ErrorStatusEnum delete(Database db, int id) {
+    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
+    try {
+      db.delete(ptTable, where: "$ptId=?", whereArgs: [id.toString()]);
+    } catch (e) {
+      returnStatus = ErrorStatusEnum.ERROR;
+    }
     return returnStatus;
   }
 
-  @override
-  Tuple2<ErrorStatus, PrayerTimeData> getList<PrayerTimeData>(Database db) {
-    return null;
+  Future<Tuple2<ErrorStatusEnum, List<PrayerTimeData>>> getList(Database db) async {
+    List<PrayerTimeData> list = List<PrayerTimeData>();
+    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
+    try {
+      var onValue = await db.query(ptTable);
+      if (onValue.isNotEmpty) {
+        onValue.map((item) => PrayerTimeData.fromJson(item)).toList();
+      }
+    } catch (e) {
+      returnStatus = ErrorStatusEnum.ERROR;
+    }
+    return Tuple2<ErrorStatusEnum, List<PrayerTimeData>>(returnStatus, list);
   }
 
-  @override
-  ErrorStatus insert(Database db, Map<String, dynamic> data) {
-    ErrorStatus returnStatus = ErrorStatus.ERROR;
-    db.insert(ptTable, data).then((onValue) {
-      if (onValue == 1) {
-        returnStatus = ErrorStatus.OK;
+  Future<Tuple2<ErrorStatusEnum, PrayerTimeData>> getPrayerDataFromDate(Database db, DateTime date) async {
+    PrayerTimeData data;
+    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
+    String dateStr = DateFormat('dd-MMM-yyyy').format(date);
+    try {
+      var onValue = await db.query(ptTable, where: "$ptDate=?", whereArgs: [dateStr]);
+      if (onValue.isNotEmpty) {
+        data = PrayerTimeData.fromJson(onValue[0]);
       }
-    });
+    } catch (e) {
+      log(e.toString());
+      returnStatus = ErrorStatusEnum.ERROR;
+    }
+    return Tuple2<ErrorStatusEnum, PrayerTimeData>(returnStatus, data);
+  }
+
+  ErrorStatusEnum insert(Database db, Map<String, dynamic> data) {
+    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
+    try {
+      db.insert(ptTable, data);
+    } catch (e) {
+      returnStatus = ErrorStatusEnum.ERROR;
+    }
     return returnStatus;
   }
 }

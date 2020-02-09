@@ -3,7 +3,7 @@ class PrayerTimeZone {
   String code;
   String state;
   String region;
-  bool isSelected;
+  int isSelected;
   // method
   PrayerTimeZone({
     this.code,
