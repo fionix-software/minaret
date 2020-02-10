@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:tuple/tuple.dart';
 
 import 'package:waktuku/about.dart';
+import 'package:waktuku/logic/main_database.dart';
+import 'package:waktuku/logic/prayer_time_data_database.dart';
+import 'package:waktuku/logic/prayer_time_util.dart';
+import 'package:waktuku/logic/prayer_time_zone_database.dart';
+import 'package:waktuku/model/prayer_time_data.dart';
+import 'package:waktuku/model/prayer_time_zone.dart';
 import 'package:waktuku/zone.dart';
 import 'package:waktuku/logic/common.dart';
 
@@ -15,8 +22,8 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   Widget timeCard(String salatTime, String time) {
-    DateTime timeNow = DateFormat('kk:mm').parse(DateFormat('kk:mm').format(DateTime.now()));
-    DateTime timeSalat = DateFormat('kk:mm').parse(time);
+    DateTime timeNow = DateFormat('HH:mm').parse(DateFormat('HH:mm').format(DateTime.now()));
+    DateTime timeSalat = DateFormat('HH:mm').parse(time);
     bool isCurrentSalatTime = (timeSalat.isBefore(timeNow)) ? true : false;
     return Card(
       elevation: 0,
@@ -76,38 +83,76 @@ class HomePageState extends State<HomePage> {
         elevation: 0.0,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(bottom: 30),
-              child: Column(
-                children: <Widget>[
-                  Text('25 Jamadilawal 1441 Hijri'),
-                  Text(
-                    'SGR03',
-                    style: TextStyle(
-                      fontSize: 40,
-                      color: appThemeColor,
-                    ),
-                  ),
-                  Text('Klang, Kuala Langat')
-                ],
-              ),
-            ),
-            timeCard('Imsak', '06:05'),
-            timeCard('Subuh', '06:15'),
-            timeCard('Syuruk', '07:24'),
-            timeCard('Dhuha', '07:47'),
-            timeCard('Zohor', '13:27'),
-            timeCard('Asar', '16:49'),
-            timeCard('Maghrib', '19:25'),
-            timeCard('Isya', '20:38'),
-          ],
-        ),
+        child: FutureBuilder(
+            future: getPrayerTimeData(),
+            builder: (BuildContext context,
+                AsyncSnapshot<Tuple3<PrayerTimeZone, PrayerTimeData, ErrorStatusEnum>> snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data.item3 == ErrorStatusEnum.OK) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(left: 40, right: 40, bottom: 40),
+                        child: Column(
+                          children: <Widget>[
+                            Text(PrayerTimeUtil.fixHijriCalendar(snapshot.data.item2.hijri)),
+                            Text(
+                              snapshot.data.item1.code,
+                              style: TextStyle(
+                                fontSize: 40,
+                                color: appThemeColor,
+                              ),
+                            ),
+                            Text(
+                              snapshot.data.item1.region,
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ),
+                      ),
+                      timeCard('Imsak', snapshot.data.item2.imsak),
+                      timeCard('Subuh', snapshot.data.item2.fajr),
+                      timeCard('Syuruk', snapshot.data.item2.syuruk),
+                      timeCard('Zohor', snapshot.data.item2.dhuhr),
+                      timeCard('Asar', snapshot.data.item2.asr),
+                      timeCard('Maghrib', snapshot.data.item2.maghrib),
+                      timeCard('Isya', snapshot.data.item2.isha),
+                    ],
+                  );
+                }
+                return Text(errorStatusEnumMap[snapshot.data.item3]);
+              }
+              return Text('Loading');
+            }),
       ),
       backgroundColor: Colors.white,
     );
+  }
+
+  Future<Tuple3<PrayerTimeZone, PrayerTimeData, ErrorStatusEnum>> getPrayerTimeData() async {
+    // get selected zone
+    var getSelectedZoneReturn =
+        await DatabaseItemPrayerZone().getSelectedZone(await DatabaseHelper.getInstance.database);
+    if (getSelectedZoneReturn.item1 != ErrorStatusEnum.OK) {
+      return Tuple3(null, null, getSelectedZoneReturn.item1);
+    } else if (getSelectedZoneReturn.item2 == null) {
+      return Tuple3(null, null, ErrorStatusEnum.ERROR_GET_SELECTED_ZONE);
+    }
+    PrayerTimeZone selectedZone = getSelectedZoneReturn.item2;
+
+    // get current selected zone data
+    var getPrayerDataFromTodayReturn = await DatabaseItemPrayerTime()
+        .getPrayerDataFromDate(await DatabaseHelper.getInstance.database, selectedZone.code, DateTime.now());
+    if (getPrayerDataFromTodayReturn.item1 != ErrorStatusEnum.OK) {
+      return Tuple3(selectedZone, null, getPrayerDataFromTodayReturn.item1);
+    } else if (getPrayerDataFromTodayReturn.item2 == null) {
+      return Tuple3(selectedZone, null, ErrorStatusEnum.ERROR_GET_SELECTED_ZONE_DATA);
+    }
+    PrayerTimeData selectedZoneData = getPrayerDataFromTodayReturn.item2;
+
+    // return
+    return Tuple3(selectedZone, selectedZoneData, ErrorStatusEnum.OK);
   }
 }

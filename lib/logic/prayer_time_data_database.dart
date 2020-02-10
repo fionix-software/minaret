@@ -57,26 +57,12 @@ class DatabaseItemPrayerTime {
     return returnStatus;
   }
 
-  Future<Tuple2<ErrorStatusEnum, List<PrayerTimeData>>> getList(Database db) async {
-    List<PrayerTimeData> list = List<PrayerTimeData>();
-    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
-    try {
-      var onValue = await db.query(ptTable);
-      if (onValue.isNotEmpty) {
-        onValue.map((item) => PrayerTimeData.fromJson(item)).toList();
-      }
-    } catch (e) {
-      returnStatus = ErrorStatusEnum.ERROR;
-    }
-    return Tuple2<ErrorStatusEnum, List<PrayerTimeData>>(returnStatus, list);
-  }
-
-  Future<Tuple2<ErrorStatusEnum, PrayerTimeData>> getPrayerDataFromDate(Database db, DateTime date) async {
+  Future<Tuple2<ErrorStatusEnum, PrayerTimeData>> getPrayerDataFromDate(Database db, String zone, DateTime date) async {
     PrayerTimeData data;
     ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
     String dateStr = DateFormat('dd-MMM-yyyy').format(date);
     try {
-      var onValue = await db.query(ptTable, where: "$ptDate=?", whereArgs: [dateStr]);
+      var onValue = await db.query(ptTable, where: "$ptDate=? AND $ptZone=?", whereArgs: [dateStr, zone]);
       if (onValue.isNotEmpty) {
         data = PrayerTimeData.fromJson(onValue[0]);
       }
