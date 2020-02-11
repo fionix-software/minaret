@@ -1,7 +1,7 @@
 name: waktuku
 description: Malaysia Muslim Prayer Time App
 
-version: 1.0.0+1
+version: 4.0+15
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -14,6 +14,7 @@ dependencies:
   http: ^0.12.0
   intl: ^0.16.1
   html: ^0.14.0
+  package_info: ^0.4.0
   path_provider: ^1.5.1
   # components (third party)
   tuple: ^1.0.3
@@ -30,3 +31,5 @@ flutter:
     - family: Varela
       fonts:
         - asset: font/varela.ttf
+  assets:
+    - img/fionix.png

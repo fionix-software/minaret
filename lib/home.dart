@@ -22,9 +22,6 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   Widget timeCard(String salatTime, String time) {
-    DateTime timeNow = DateFormat('HH:mm').parse(DateFormat('HH:mm').format(DateTime.now()));
-    DateTime timeSalat = DateFormat('HH:mm').parse(time);
-    bool isCurrentSalatTime = (timeSalat.isBefore(timeNow)) ? true : false;
     return Card(
       elevation: 0,
       child: Container(
@@ -34,7 +31,7 @@ class HomePageState extends State<HomePage> {
             Text(salatTime),
             Text(
               time,
-              style: TextStyle(fontSize: 25, color: (isCurrentSalatTime) ? appThemeColor : Colors.black),
+              style: TextStyle(fontSize: 25),
             ),
           ],
         ),
@@ -97,7 +94,6 @@ class HomePageState extends State<HomePage> {
                         margin: EdgeInsets.only(left: 40, right: 40, bottom: 40),
                         child: Column(
                           children: <Widget>[
-                            Text(PrayerTimeUtil.fixHijriCalendar(snapshot.data.item2.hijri)),
                             Text(
                               snapshot.data.item1.code,
                               style: TextStyle(
@@ -105,6 +101,8 @@ class HomePageState extends State<HomePage> {
                                 color: appThemeColor,
                               ),
                             ),
+                            Text(snapshot.data.item2.date),
+                            Text(PrayerTimeUtil.fixHijriCalendar(snapshot.data.item2.hijri)),
                             Text(
                               snapshot.data.item1.region,
                               textAlign: TextAlign.center,
@@ -118,7 +116,7 @@ class HomePageState extends State<HomePage> {
                       timeCard('Zohor', snapshot.data.item2.dhuhr),
                       timeCard('Asar', snapshot.data.item2.asr),
                       timeCard('Maghrib', snapshot.data.item2.maghrib),
-                      timeCard('Isya', snapshot.data.item2.isha),
+                      timeCard('Isyak', snapshot.data.item2.isha),
                     ],
                   );
                 }
@@ -151,6 +149,10 @@ class HomePageState extends State<HomePage> {
       return Tuple3(selectedZone, null, ErrorStatusEnum.ERROR_GET_SELECTED_ZONE_DATA);
     }
     PrayerTimeData selectedZoneData = getPrayerDataFromTodayReturn.item2;
+
+    // fix date
+    selectedZoneData.date =
+        DateFormat('dd MMMM yyyy').format(DateFormat('dd-MMM-yyyy').parse(selectedZoneData.date));
 
     // return
     return Tuple3(selectedZone, selectedZoneData, ErrorStatusEnum.OK);

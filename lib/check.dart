@@ -37,7 +37,7 @@ class CheckingPageState extends State<CheckingPage> {
       ),
       backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.only(bottom: 40),
+        padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
         child: Center(
           child: FutureBuilder(
               future: loadPrayerDataStatus(),
@@ -121,7 +121,6 @@ class CheckingPageState extends State<CheckingPage> {
     PrayerTimeZone selectedZone = getSelectedZoneReturn.item2;
     if (selectedZone == null) {
       // set zone
-      // TODO: add selection list on zone page
       if (DatabaseItemPrayerZone().setSelectedZone(await DatabaseHelper.getInstance.database, 'SGR01') !=
           ErrorStatusEnum.OK) {
         return ErrorStatusEnum.ERROR_SET_SELECTED_ZONE;
