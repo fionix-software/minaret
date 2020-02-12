@@ -1,4 +1,4 @@
-package com.example.waktuku
+package net.fionix.moments
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
