@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:waktuku/logic/common.dart';
@@ -22,22 +21,14 @@ class CheckingPageState extends State<CheckingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            FontAwesomeIcons.times,
-            color: appThemeColor,
-          ),
-          onPressed: () {
-            _showExitConfirmation();
-          },
-        ),
         backgroundColor: Colors.white,
         elevation: 0,
       ),
       backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
+        padding: EdgeInsets.only(left: 40, right: 40, bottom: 40),
         child: Center(
           child: FutureBuilder(
               future: loadPrayerDataStatus(),
@@ -47,7 +38,12 @@ class CheckingPageState extends State<CheckingPage> {
                 Icon icon = Icon(FontAwesomeIcons.syncAlt, size: 40, color: appThemeColor);
                 if (snapshot.hasData) {
                   message = errorStatusEnumMap[snapshot.data];
-                  if (snapshot.data != ErrorStatusEnum.OK) {
+                  if (snapshot.data == ErrorStatusEnum.ERROR_GET_SELECTED_ZONE) {
+                    // delay is needed to make sure user can finish read the status enum string
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Navigator.pushReplacementNamed(context, '/zone/first-time');
+                    });
+                  } else if (snapshot.data != ErrorStatusEnum.OK) {
                     icon = Icon(FontAwesomeIcons.thumbsDown, size: 40, color: appThemeColor);
                   } else {
                     icon = Icon(FontAwesomeIcons.thumbsUp, size: 40, color: appThemeColor);
@@ -55,7 +51,7 @@ class CheckingPageState extends State<CheckingPage> {
                     SchedulerBinding.instance.scheduleFrameCallback((callback) {
                       // delay is needed to make sure user can finish read the status enum string
                       Future.delayed(const Duration(seconds: 1), () {
-                        Navigator.pushReplacementNamed(context, '/home');
+                        Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
                       });
                     });
                   }
@@ -113,27 +109,10 @@ class CheckingPageState extends State<CheckingPage> {
     // get selected zone
     var getSelectedZoneReturn =
         await DatabaseItemPrayerZone().getSelectedZone(await DatabaseHelper.getInstance.database);
-    if (getSelectedZoneReturn.item1 != ErrorStatusEnum.OK) {
+    if (getSelectedZoneReturn.item1 != ErrorStatusEnum.OK || getSelectedZoneReturn.item2 == null) {
       return ErrorStatusEnum.ERROR_GET_SELECTED_ZONE;
     }
-
-    // populate selected zone
     PrayerTimeZone selectedZone = getSelectedZoneReturn.item2;
-    if (selectedZone == null) {
-      // set zone
-      if (DatabaseItemPrayerZone().setSelectedZone(await DatabaseHelper.getInstance.database, 'SGR01') !=
-          ErrorStatusEnum.OK) {
-        return ErrorStatusEnum.ERROR_SET_SELECTED_ZONE;
-      }
-      // get the selected zone after set the selected zone
-      getSelectedZoneReturn = await DatabaseItemPrayerZone().getSelectedZone(await DatabaseHelper.getInstance.database);
-      if (getSelectedZoneReturn.item1 != ErrorStatusEnum.OK) {
-        return getSelectedZoneReturn.item1;
-      } else if (getSelectedZoneReturn.item2 == null) {
-        return ErrorStatusEnum.ERROR_GET_SELECTED_ZONE;
-      }
-      selectedZone = getSelectedZoneReturn.item2;
-    }
 
     // get current selected zone data
     var getPrayerDataFromTodayReturn = await DatabaseItemPrayerTime()
@@ -176,32 +155,5 @@ class CheckingPageState extends State<CheckingPage> {
 
     // finished
     return ErrorStatusEnum.OK;
-  }
-
-  // exit confirmation upon exit
-  void _showExitConfirmation() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Exit"),
-          content: Text("Are you sure exit the application?"),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("No"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            FlatButton(
-              child: Text("Yes"),
-              onPressed: () {
-                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 }

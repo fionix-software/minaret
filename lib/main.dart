@@ -19,7 +19,8 @@ class MainApp extends StatelessWidget {
         '/about': (_) => AboutPage(),
         '/home': (_) => HomePage(),
         '/check': (_) => CheckingPage(),
-        '/zone': (_) => ZonePage(),
+        '/zone': (_) => ZonePage(firstTime: false),
+        '/zone/first-time': (_) => ZonePage(firstTime: true),
       },
     );
   }

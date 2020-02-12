@@ -73,8 +73,15 @@ class DatabaseItemPrayerTime {
     return Tuple2<ErrorStatusEnum, PrayerTimeData>(returnStatus, data);
   }
 
-  ErrorStatusEnum insert(Database db, Map<String, dynamic> data) {
+  Future<ErrorStatusEnum> insert(Database db, Map<String, dynamic> data) async {
     ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
+    // check for existing
+    try {
+      db.delete(ptTable, where: "$ptDate=? AND $ptZone=?", whereArgs: [data['date'], data['zone']]);
+    } catch (e) {
+      returnStatus = ErrorStatusEnum.ERROR;
+    }
+    // insert new data
     try {
       db.insert(ptTable, data);
     } catch (e) {

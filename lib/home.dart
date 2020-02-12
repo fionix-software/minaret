@@ -39,9 +39,12 @@ class HomePageState extends State<HomePage> {
     );
   }
 
+  final GlobalKey<ScaffoldState> _scaffold = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffold,
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         actions: <Widget>[
           IconButton(
@@ -49,7 +52,19 @@ class HomePageState extends State<HomePage> {
               FontAwesomeIcons.syncAlt,
               color: appThemeColor,
             ),
-            onPressed: () {},
+            onPressed: () {
+              refreshData().then((onValue) {
+                // change message based on refresh data return status
+                String message = "Prayer time updated";
+                if (onValue != ErrorStatusEnum.OK) {
+                  message = "Update prayer time failed";
+                }
+                // set snackbar
+                _scaffold.currentState.showSnackBar(SnackBar(
+                  content: Text(message),
+                ));
+              });
+            },
           ),
           IconButton(
             icon: Icon(
@@ -150,11 +165,42 @@ class HomePageState extends State<HomePage> {
     }
     PrayerTimeData selectedZoneData = getPrayerDataFromTodayReturn.item2;
 
-    // fix date
-    selectedZoneData.date =
-        DateFormat('dd MMMM yyyy').format(DateFormat('dd-MMM-yyyy').parse(selectedZoneData.date));
-
-    // return
+    // fix date and return
+    selectedZoneData.date = DateFormat('dd MMMM yyyy').format(DateFormat('dd-MMM-yyyy').parse(selectedZoneData.date));
     return Tuple3(selectedZone, selectedZoneData, ErrorStatusEnum.OK);
+  }
+
+  Future<ErrorStatusEnum> refreshData() async {
+    // get selected zone
+    var getSelectedZoneReturn =
+        await DatabaseItemPrayerZone().getSelectedZone(await DatabaseHelper.getInstance.database);
+    if (getSelectedZoneReturn.item1 != ErrorStatusEnum.OK) {
+      return ErrorStatusEnum.ERROR_GET_SELECTED_ZONE;
+    }
+    PrayerTimeZone selectedZone = getSelectedZoneReturn.item2;
+    // retrieve zone data
+    var retrieveSelectedZoneDataReturn = await PrayerTimeUtil.retrieveZoneData('year', selectedZone.code);
+    if (retrieveSelectedZoneDataReturn.item1 != ErrorStatusEnum.OK) {
+      return retrieveSelectedZoneDataReturn.item1;
+    } else if (retrieveSelectedZoneDataReturn.item2.isEmpty) {
+      return ErrorStatusEnum.ERROR_RETRIEVE_ZONE_DATA;
+    }
+    // add data into database
+    retrieveSelectedZoneDataReturn.item2.forEach((item) async {
+      DatabaseItemPrayerTime().insert(await DatabaseHelper.getInstance.database, {
+        'hijri': item.hijri,
+        'zone': item.zone,
+        'date': item.date,
+        'day': item.day,
+        'imsak': item.imsak,
+        'fajr': item.fajr,
+        'syuruk': item.syuruk,
+        'dhuhr': item.dhuhr,
+        'asr': item.asr,
+        'maghrib': item.maghrib,
+        'isha': item.isha,
+      });
+    });
+    return ErrorStatusEnum.OK;
   }
 }

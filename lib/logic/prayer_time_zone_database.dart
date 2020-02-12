@@ -70,8 +70,19 @@ class DatabaseItemPrayerZone {
     return Tuple2<ErrorStatusEnum, PrayerTimeZone>(returnStatus, selectedZone);
   }
 
-  ErrorStatusEnum setSelectedZone(Database db, String code) {
+  Future<ErrorStatusEnum> setSelectedZone(Database db, String code) async {
     ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
+    // unselect all selected zone
+    try {
+      db.rawUpdate('''
+        UPDATE $ptTable
+        SET $ptIsSelected=0
+        WHERE $ptIsSelected=1
+      ''');
+    } catch (e) {
+      returnStatus = ErrorStatusEnum.ERROR;
+    }
+    // select zone
     try {
       db.rawUpdate('''
         UPDATE $ptTable

@@ -15,6 +15,7 @@ class AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
@@ -31,8 +32,8 @@ class AboutPageState extends State<AboutPage> {
       backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.only(
-          left: 20,
-          right: 20,
+          left: 40,
+          right: 40,
           bottom: 40,
         ),
         child: SizedBox.expand(
@@ -52,10 +53,16 @@ class AboutPageState extends State<AboutPage> {
                 ),
               ),
               FutureBuilder(
-                  future: getVersion(),
-                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                    return Text('version ${snapshot.data}');
-                  }),
+                future: getVersion(),
+                builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  return Text('version ${snapshot.data}');
+                },
+              ),
+              Text('Waktuku is a rebrand of Moments Log.'),
+              Text(
+                'All data is retrieved from e-Solat using web scraping technique.',
+                textAlign: TextAlign.center,
+              ),
               SizedBox(height: 20),
               Text(
                 'Developer:',
