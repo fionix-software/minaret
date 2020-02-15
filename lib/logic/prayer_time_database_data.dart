@@ -4,10 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:tuple/tuple.dart';
 
-import 'package:waktuku/logic/common.dart';
-import 'package:waktuku/model/prayer_time_data.dart';
+import 'package:minaret/logic/common.dart';
+import 'package:minaret/model/prayer_time_data.dart';
 
 class DatabaseItemPrayerTime {
+  // table information
   final String ptTable = "_prayer_time_data";
   final String ptId = "id";
   final String ptDate = "date";
@@ -22,6 +23,7 @@ class DatabaseItemPrayerTime {
   final String ptMaghrib = "maghrib";
   final String ptIsha = "isha";
 
+  // for table creation
   Future<ErrorStatusEnum> create(Database db) async {
     ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
     try {
@@ -47,16 +49,7 @@ class DatabaseItemPrayerTime {
     return returnStatus;
   }
 
-  ErrorStatusEnum delete(Database db, int id) {
-    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
-    try {
-      db.delete(ptTable, where: "$ptId=?", whereArgs: [id.toString()]);
-    } catch (e) {
-      returnStatus = ErrorStatusEnum.ERROR;
-    }
-    return returnStatus;
-  }
-
+  // get prayer data from date
   Future<Tuple2<ErrorStatusEnum, PrayerTimeData>> getPrayerDataFromDate(Database db, String zone, DateTime date) async {
     PrayerTimeData data;
     ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
@@ -73,9 +66,10 @@ class DatabaseItemPrayerTime {
     return Tuple2<ErrorStatusEnum, PrayerTimeData>(returnStatus, data);
   }
 
+  // insert new data and delete old one if exist
   Future<ErrorStatusEnum> insert(Database db, Map<String, dynamic> data) async {
     ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
-    // check for existing
+    // delete existing
     try {
       db.delete(ptTable, where: "$ptDate=? AND $ptZone=?", whereArgs: [data['date'], data['zone']]);
     } catch (e) {

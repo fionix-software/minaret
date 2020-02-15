@@ -1,3 +1,3 @@
-# waktuku
+# Minaret
 
-An Android application for viewing Muslim prayer time in Malaysia.
+Minaret is a cross platform e-Solat application

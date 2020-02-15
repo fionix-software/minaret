@@ -11,6 +11,7 @@ class PrayerTimeData {
   String asr;
   String maghrib;
   String isha;
+
   // method
   PrayerTimeData({
     this.hijri,
@@ -25,7 +26,8 @@ class PrayerTimeData {
     this.maghrib,
     this.isha,
   });
-  // factory
+
+  // from json to object
   factory PrayerTimeData.fromJson(Map<String, dynamic> parsedJson) {
     return PrayerTimeData(
       hijri: parsedJson['hijri'],
@@ -40,5 +42,22 @@ class PrayerTimeData {
       maghrib: parsedJson['maghrib'],
       isha: parsedJson['isha'],
     );
+  }
+
+  // from object to map
+  Map<String, dynamic> toMap() {
+    return {
+      'hijri': this.hijri,
+      'zone': this.zone,
+      'date': this.date,
+      'day': this.day,
+      'imsak': this.imsak,
+      'fajr': this.fajr,
+      'syuruk': this.syuruk,
+      'dhuhr': this.dhuhr,
+      'asr': this.asr,
+      'maghrib': this.maghrib,
+      'isha': this.isha,
+    };
   }
 }
