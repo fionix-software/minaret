@@ -1,10 +1,6 @@
-import 'dart:async';
-
 import 'package:sqflite/sqlite_api.dart';
-import 'package:tuple/tuple.dart';
-
 import 'package:minaret/logic/common.dart';
-import 'package:minaret/model/prayer_time_zone.dart';
+import 'package:minaret/model/pt_zone.dart';
 
 class DatabaseItemPrayerZone {
   // table information
@@ -35,76 +31,83 @@ class DatabaseItemPrayerZone {
   }
 
   // get zone list sorted to selected first
-  Future<Tuple2<ErrorStatusEnum, List<PrayerTimeZone>>> getList(Database db) async {
-    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
-    List<PrayerTimeZone> list = List<PrayerTimeZone>();
+  Future<List<PrayerTimeZone>> getList(Database db) async {
     try {
       var onValue = await db.query(ptTable, orderBy: "$ptIsSelected DESC");
       if (onValue.isNotEmpty) {
-        list = onValue.map((item) => PrayerTimeZone.fromJson(item)).toList();
+        return onValue.map((item) => PrayerTimeZone.fromJson(item)).toList();
       }
     } catch (e) {
-      returnStatus = ErrorStatusEnum.ERROR;
+      return null;
     }
-    return Tuple2<ErrorStatusEnum, List<PrayerTimeZone>>(returnStatus, list);
+    return null;
   }
 
   // get selected zone
-  Future<Tuple2<ErrorStatusEnum, PrayerTimeZone>> getSelectedZone(Database db) async {
-    PrayerTimeZone selectedZone;
-    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
+  Future<PrayerTimeZone> getSelectedZone(Database db) async {
     try {
       var onValue = await db.query(ptTable, where: '$ptIsSelected=1');
       if (onValue.isNotEmpty) {
-        selectedZone = PrayerTimeZone.fromJson(onValue[0]);
+        return PrayerTimeZone.fromJson(onValue[0]);
       }
     } catch (e) {
-      returnStatus = ErrorStatusEnum.ERROR;
+      return null;
     }
-    return Tuple2<ErrorStatusEnum, PrayerTimeZone>(returnStatus, selectedZone);
+    return null;
   }
 
   // set selected zone and unselect old selected zone
   Future<ErrorStatusEnum> setSelectedZone(Database db, String code) async {
-    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
     // unselect all selected zone
     try {
-      db.rawUpdate('''
+      db.rawUpdate(
+        '''
         UPDATE $ptTable
         SET $ptIsSelected=0
         WHERE $ptIsSelected=1
-      ''');
+        ''',
+      );
     } catch (e) {
-      returnStatus = ErrorStatusEnum.ERROR;
+      return ErrorStatusEnum.ERROR;
     }
     // select zone
     try {
-      db.rawUpdate('''
+      db.rawUpdate(
+        '''
         UPDATE $ptTable
         SET $ptIsSelected=1
         WHERE $ptCode=?
-      ''', [code]);
+        ''',
+        [
+          code
+        ],
+      );
     } catch (e) {
-      returnStatus = ErrorStatusEnum.ERROR;
+      return ErrorStatusEnum.ERROR;
     }
-    return returnStatus;
+    return ErrorStatusEnum.OK;
   }
 
   // insert new entry
-  ErrorStatusEnum insert(Database db, Map<String, dynamic> data) {
-    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
+  Future<ErrorStatusEnum> insert(Database db, Map<String, dynamic> data) async {
     // delete existing
     try {
-      db.delete(ptTable, where: "$ptCode=?", whereArgs: [data['code']]);
+      db.delete(
+        ptTable,
+        where: "$ptCode=?",
+        whereArgs: [
+          data['code'],
+        ],
+      );
     } catch (e) {
-      returnStatus = ErrorStatusEnum.ERROR;
+      return ErrorStatusEnum.ERROR;
     }
     // insert new data
     try {
       db.insert(ptTable, data);
     } catch (e) {
-      returnStatus = ErrorStatusEnum.ERROR;
+      return ErrorStatusEnum.ERROR;
     }
-    return returnStatus;
+    return ErrorStatusEnum.OK;
   }
 }

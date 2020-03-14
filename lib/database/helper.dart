@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:minaret/logic/common.dart';
-import 'package:minaret/logic/prayer_time_database_data.dart';
-import 'package:minaret/logic/prayer_time_database_zone.dart';
+import 'package:minaret/database/db_data.dart';
+import 'package:minaret/database/db_zone.dart';
 
 class DatabaseHelper {
   // database info

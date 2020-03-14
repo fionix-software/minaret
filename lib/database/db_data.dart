@@ -1,11 +1,10 @@
 import 'dart:developer';
 
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqlite_api.dart';
-import 'package:tuple/tuple.dart';
-
 import 'package:minaret/logic/common.dart';
-import 'package:minaret/model/prayer_time_data.dart';
+import 'package:minaret/model/pt_data.dart';
 
 class DatabaseItemPrayerTime {
   // table information
@@ -25,7 +24,6 @@ class DatabaseItemPrayerTime {
 
   // for table creation
   Future<ErrorStatusEnum> create(Database db) async {
-    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
     try {
       await db.execute('''
       CREATE TABLE $ptTable (
@@ -44,43 +42,58 @@ class DatabaseItemPrayerTime {
       );
     ''');
     } catch (e) {
-      returnStatus = ErrorStatusEnum.ERROR;
+      return ErrorStatusEnum.ERROR;
     }
-    return returnStatus;
+    return ErrorStatusEnum.OK;
   }
 
   // get prayer data from date
-  Future<Tuple2<ErrorStatusEnum, PrayerTimeData>> getPrayerDataFromDate(Database db, String zone, DateTime date) async {
-    PrayerTimeData data;
-    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
-    String dateStr = DateFormat('dd-MMM-yyyy').format(date);
+  Future<PrayerTimeData> getPrayerDataFromDate(Database db, String zone, DateTime date) async {
+    // parse date as Malaysia time format
+    await initializeDateFormatting('ms_MY', null);
+    String dateStr = DateFormat('dd-MMM-yyyy', 'ms').format(date);
+    // get prayer data from date
     try {
-      var onValue = await db.query(ptTable, where: "$ptDate=? AND $ptZone=?", whereArgs: [dateStr, zone]);
+      log("Getting: " + dateStr);
+      var onValue = await db.query(
+        ptTable,
+        where: "$ptDate=? AND $ptZone=?",
+        whereArgs: [
+          dateStr,
+          zone,
+        ],
+      );
       if (onValue.isNotEmpty) {
-        data = PrayerTimeData.fromJson(onValue[0]);
+        return PrayerTimeData.fromJson(onValue[0]);
       }
     } catch (e) {
-      log(e.toString());
-      returnStatus = ErrorStatusEnum.ERROR;
+      return null;
     }
-    return Tuple2<ErrorStatusEnum, PrayerTimeData>(returnStatus, data);
+    // error
+    return null;
   }
 
   // insert new data and delete old one if exist
   Future<ErrorStatusEnum> insert(Database db, Map<String, dynamic> data) async {
-    ErrorStatusEnum returnStatus = ErrorStatusEnum.OK;
     // delete existing
     try {
-      db.delete(ptTable, where: "$ptDate=? AND $ptZone=?", whereArgs: [data['date'], data['zone']]);
+      db.delete(
+        ptTable,
+        where: "$ptDate=? AND $ptZone=?",
+        whereArgs: [
+          data['date'],
+          data['zone'],
+        ],
+      );
     } catch (e) {
-      returnStatus = ErrorStatusEnum.ERROR;
+      return ErrorStatusEnum.ERROR;
     }
     // insert new data
     try {
       db.insert(ptTable, data);
     } catch (e) {
-      returnStatus = ErrorStatusEnum.ERROR;
+      return ErrorStatusEnum.ERROR;
     }
-    return returnStatus;
+    return ErrorStatusEnum.OK;
   }
 }

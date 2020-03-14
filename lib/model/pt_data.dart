@@ -1,16 +1,16 @@
 class PrayerTimeData {
   // field
-  String hijri;
-  String zone;
-  String date;
-  String day;
-  String imsak;
-  String fajr;
-  String syuruk;
-  String dhuhr;
-  String asr;
-  String maghrib;
-  String isha;
+  final String hijri;
+  final String zone;
+  final String date;
+  final String day;
+  final String imsak;
+  final String fajr;
+  final String syuruk;
+  final String dhuhr;
+  final String asr;
+  final String maghrib;
+  final String isha;
 
   // method
   PrayerTimeData({

@@ -1,10 +1,10 @@
 class PrayerTimeZone {
   // field
-  String code;
-  String state;
-  String region;
-  int isSelected;
-  
+  final String code;
+  final String state;
+  final String region;
+  final int isSelected;
+
   // method
   PrayerTimeZone({
     this.code,
