@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:minaret/model/pt_data.dart';
 import 'package:minaret/model/pt_zone.dart';
+import 'package:minaret/widget/appbar.dart';
 import 'package:minaret/widget/home/card_time.dart';
 import 'package:minaret/widget/home/header.dart';
+import 'package:minaret/widget/home/icon_about.dart';
+import 'package:minaret/widget/home/icon_update.dart';
+import 'package:minaret/widget/home/icon_zone.dart';
 import 'package:minaret/widget/scaffold.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,12 +22,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return buildScaffold(
-      null,
+      buildAppBar(
+        context,
+        false,
+        [
+          iconZone(context),
+          iconUpdate(context),
+          iconAbout(context),
+        ],
+      ),
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           buildHeader(
+            widget.zone.state,
             widget.zone.code,
             widget.zoneData.date,
             widget.zoneData.hijri,

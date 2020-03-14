@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
@@ -22,7 +21,6 @@ class ESolatRepository {
     }
     // save into database
     retrieveZoneListReturn.forEach((item) async {
-      log(item.code + ": " + item.state);
       await DatabaseItemPrayerZone().insert(await DatabaseHelper.getInstance.database, item.toMap());
     });
     // return
@@ -38,7 +36,6 @@ class ESolatRepository {
     }
     // save into database
     retrieveZoneDataReturn.forEach((item) async {
-      log(item.hijri + ": " + item.fajr);
       await DatabaseItemPrayerTime().insert(await DatabaseHelper.getInstance.database, item.toMap());
     });
     // return

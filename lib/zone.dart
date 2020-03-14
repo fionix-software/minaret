@@ -44,7 +44,7 @@ class _ZonePageContentState extends State<ZonePageContent> {
     return BlocListener<PrayerZoneBloc, PrayerZoneState>(
       listener: (BuildContext context, PrayerZoneState state) {
         if (state is PrayerZoneSetSuccess) {
-          Navigator.popAndPushNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/home');
         }
       },
       child: BlocBuilder<PrayerZoneBloc, PrayerZoneState>(

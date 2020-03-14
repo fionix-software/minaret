@@ -44,7 +44,7 @@ class _HomePageContentState extends State<HomePageContent> {
     return BlocListener<PrayerTimeBloc, PrayerTimeState>(
       listener: (BuildContext context, PrayerTimeState state) {
         if (state is PrayerTimeDataNotInitialized) {
-          Navigator.popAndPushNamed(context, '/zone');
+          Navigator.pushReplacementNamed(context, '/zone');
         }
       },
       child: BlocBuilder<PrayerTimeBloc, PrayerTimeState>(

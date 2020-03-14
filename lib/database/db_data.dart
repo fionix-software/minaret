@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -54,7 +52,6 @@ class DatabaseItemPrayerTime {
     String dateStr = DateFormat('dd-MMM-yyyy', 'ms').format(date);
     // get prayer data from date
     try {
-      log("Getting: " + dateStr);
       var onValue = await db.query(
         ptTable,
         where: "$ptDate=? AND $ptZone=?",

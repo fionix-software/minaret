@@ -6,7 +6,7 @@ import 'package:minaret/logic/common.dart';
 import 'package:minaret/model/pt_zone.dart';
 import 'package:minaret/widget/appbar.dart';
 import 'package:minaret/widget/scaffold.dart';
-import 'package:minaret/widget/text_title_big.dart';
+import 'package:minaret/widget/screenTitle.dart';
 
 class ZoneScreen extends StatefulWidget {
   final List<PrayerTimeZone> zoneList;
@@ -22,27 +22,27 @@ class _ZoneScreenState extends State<ZoneScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return buildScaffold(
-      buildAppBar(
-        context,
-        false,
-        null,
-      ),
-      SizedBox.expand(
-        child: Column(
-          children: [
-            buildTextTitleBig('Zone'),
-            Text('Pick your zone by state\'s district.'),
-            Text(
-              'Touch the star to select the zone.',
-              textAlign: TextAlign.center,
+    return FutureBuilder<PrayerTimeZone>(
+      future: BlocProvider.of<PrayerZoneBloc>(context).repo.getSelectedZone(),
+      builder: (BuildContext context, AsyncSnapshot<PrayerTimeZone> snapshot) {
+        return buildScaffold(
+          buildAppBar(
+            context,
+            snapshot.data != null,
+            null,
+          ),
+          SizedBox.expand(
+            child: Column(
+              children: [
+                buildScreenTitle('Pick your zone by your state\'s district.'),
+                SizedBox(height: 40),
+                buildListView(context, widget.zoneList),
+              ],
             ),
-            SizedBox(height: 40),
-            buildListView(context, widget.zoneList),
-          ],
-        ),
-      ),
-      _scaffold,
+          ),
+          _scaffold,
+        );
+      },
     );
   }
 
@@ -54,7 +54,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
           return buildCard(
             list.elementAt(position).state + ' - ' + list.elementAt(position).code,
             list.elementAt(position).region,
-            list.elementAt(position).isSelected == 1,
+            list.elementAt(position).isSelected != 0,
             () async {
               // send haptic feedback on select
               Feedback.forTap(context);

@@ -10,7 +10,12 @@ Scaffold buildScaffold(AppBar appBar, Widget scaffoldBody, GlobalKey<ScaffoldSta
     body: ScrollConfiguration(
       behavior: MyBehavior(),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(40, 0, 40, 40),
+        padding: EdgeInsets.fromLTRB(
+          40,
+          40,
+          40,
+          80,
+        ),
         child: scaffoldBody,
       ),
     ),

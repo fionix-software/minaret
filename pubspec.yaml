@@ -33,8 +33,6 @@ flutter:
     - family: Varela
       fonts:
         - asset: font/varela.ttf
-  assets:
-    - img/fionix.png
 
 flutter_icons:
   ios: true

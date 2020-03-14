@@ -22,16 +22,22 @@ class PrayerZoneBloc extends Bloc<PrayerZoneEvent, PrayerZoneState> {
 
     // load prayer zone data
     if (event is PrayerZoneLoad) {
-      // retrieve zone list
-      var retrieveZoneReturn = await repo.retrieveZoneList();
-      if (retrieveZoneReturn != ErrorStatusEnum.OK) {
-        yield PrayerZoneError(errorStatusEnumMap[ErrorStatusEnum.ERROR_RETRIEVE_ZONE_LIST]);
-        return;
-      }
       // get zone list
       var getZoneReturn = await repo.getZoneList();
       if (getZoneReturn == null || getZoneReturn.isEmpty) {
-        yield PrayerZoneError(errorStatusEnumMap[ErrorStatusEnum.ERROR_GET_ZONE_LIST]);
+        // retrieve zone list
+        var retrieveZoneReturn = await repo.retrieveZoneList();
+        if (retrieveZoneReturn != ErrorStatusEnum.OK) {
+          yield PrayerZoneError(errorStatusEnumMap[ErrorStatusEnum.ERROR_RETRIEVE_ZONE_LIST]);
+          return;
+        }
+        // retry get zone list
+        var getZoneRetryReturn = await repo.getZoneList();
+        if (getZoneRetryReturn == null || getZoneRetryReturn.isEmpty) {
+          yield PrayerZoneError(errorStatusEnumMap[ErrorStatusEnum.ERROR_GET_ZONE_LIST]);
+          return;
+        }
+        yield PrayerZoneLoadSuccess(getZoneRetryReturn);
         return;
       }
       yield PrayerZoneLoadSuccess(getZoneReturn);

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:minaret/widget/text_title_big.dart';
+import 'package:minaret/widget/screenTitle.dart';
 
-Widget buildHeader(String code, String date, String dateHijri, String region) {
+Widget buildHeader(String state, String code, String date, String dateHijri, String region) {
   return Container(
-    margin: EdgeInsets.fromLTRB(40, 0, 40, 40),
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        buildTextTitleBig(code),
+        buildScreenTitle(dateHijri),
         Text(date),
-        Text(dateHijri),
-        Text(
-          region,
-          textAlign: TextAlign.center,
-        )
+        SizedBox(height: 40),
+        buildScreenTitle(state + " - " + code),
+        Text(region),
+        SizedBox(height: 40),
       ],
     ),
   );

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -40,7 +39,6 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
           return;
         }
         // retry getting selected zone data
-        log(getSelectedZoneReturn.code);
         var getSelectedZoneDataRetryReturn = await repo.getSelectedZoneData(getSelectedZoneReturn.code);
         if (getSelectedZoneDataRetryReturn == null) {
           yield PrayerTimeError(errorStatusEnumMap[ErrorStatusEnum.ERROR_GET_SELECTED_ZONE_DATA]);
