@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minaret/widget/screenTitle.dart';
 import 'package:package_info/package_info.dart';
 import 'package:minaret/widget/appbar.dart';
 import 'package:minaret/widget/scaffold.dart';
@@ -18,31 +19,29 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  // content
   Widget buildContent() {
     return SizedBox.expand(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // Image.asset(
-          //   'img/fionix.png',
-          //   height: 80,
-          // ),
-          Text('Minaret'),
-          Text('Open Source Software'),
+          buildScreenTitle('Minaret'),
           FutureBuilder(
             future: PackageInfo.fromPlatform(),
             builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
-              return (snapshot.hasData) ? Text('version ${snapshot.data.version} (${snapshot.data.buildNumber})') : Text('version n/a');
+              String version = (snapshot.hasData) ? ('Version ' + snapshot.data.version + ' (build ' + snapshot.data.buildNumber + ')') : '';
+              return Text(version);
             },
           ),
-          Text('by Fionix'),
-          Text('Credits:'),
-          Text('Tuple (BSD 2 Clause)'),
-          Text('SQFLite (BSD 2 Clause)'),
+          Text('Open source software by Fionix'),
+          SizedBox(height: 40),
+          buildScreenTitle('Third Party Credit'),
           Text('Varela Font (Open Font)'),
           Text('Font Awesome Icons (CC by 4.0)'),
+          Text('SQFLite lib (MIT)'),
+          Text('Equatable lib (MIT)'),
+          Text('Flutter Bloc lib (MIT)'),
+          Text('Flutter Launcher Icon lib (MIT)'),
         ],
       ),
     );

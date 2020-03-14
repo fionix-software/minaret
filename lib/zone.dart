@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minaret/bloc/prayer_zone_bloc.dart';
 import 'package:minaret/logic/common.dart';
-import 'package:minaret/screen/error.dart';
-import 'package:minaret/screen/loading.dart';
+import 'package:minaret/logic/progress.dart';
+import 'package:minaret/screen/progress.dart';
 import 'package:minaret/screen/zone.dart';
 
 // Page
@@ -51,13 +51,13 @@ class _ZonePageContentState extends State<ZonePageContent> {
         builder: (BuildContext context, PrayerZoneState state) {
           // zone loading
           if (state is PrayerZoneError) {
-            return ErrorScreen(state.errorMessage);
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, state.errorMessage));
           } else if (state is PrayerZoneLoadSuccess) {
             return ZoneScreen(state.zone);
           } else if (state is PrayerZoneLoading) {
-            return LoadingScreen();
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_LOADING));
           } else {
-            return ErrorScreen(errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]);
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]));
           }
         },
       ),

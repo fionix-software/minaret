@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:minaret/logic/common.dart';
-import 'package:minaret/logic/repo_esolat.dart';
+import 'package:minaret/logic/repository.dart';
 import 'package:minaret/model/pt_zone.dart';
 
 part 'prayer_zone_event.dart';

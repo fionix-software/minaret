@@ -31,8 +31,7 @@ class DatabaseHelper {
   // sql query to create tables
   Future _onCreate(Database db, int version) async {
     // create database
-    if (await DatabaseItemPrayerTime().create(db) != ErrorStatusEnum.OK ||
-        await DatabaseItemPrayerZone().create(db) != ErrorStatusEnum.OK) {
+    if (await DatabaseItemPrayerTime().create(db) != ErrorStatusEnum.OK || await DatabaseItemPrayerZone().create(db) != ErrorStatusEnum.OK) {
       log("Unable to create database items");
     }
   }

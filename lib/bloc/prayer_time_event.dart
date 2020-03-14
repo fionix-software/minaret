@@ -8,3 +8,8 @@ class PrayerTimeLoad extends PrayerTimeEvent {
   @override
   List<Object> get props => [];
 }
+
+class PrayerTimeRefresh extends PrayerTimeEvent {
+  @override
+  List<Object> get props => [];
+}

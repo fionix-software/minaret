@@ -9,6 +9,11 @@ class PrayerTimeLoading extends PrayerTimeState {
   List<Object> get props => [];
 }
 
+class PrayerTimeRetrieving extends PrayerTimeState {
+  @override
+  List<Object> get props => [];
+}
+
 class PrayerTimeLoadSuccess extends PrayerTimeState {
   final PrayerTimeZone zone;
   final PrayerTimeData zoneData;

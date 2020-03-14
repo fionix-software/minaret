@@ -19,10 +19,5 @@ String fixTimeFormat(String time) {
 
 // fix calendar
 String fixHijriFormat(String hijri) {
-  return hijri.split('-')[2] +
-      ' ' +
-      hijriMonthNameMap[hijri.split('-')[1]] +
-      ' ' +
-      hijri.split('-')[0] +
-      ' Hijri';
+  return hijri.split('-')[2] + ' ' + hijriMonthNameMap[hijri.split('-')[1]] + ' ' + hijri.split('-')[0] + ' Hijri';
 }

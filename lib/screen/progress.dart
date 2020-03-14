@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:minaret/logic/progress.dart';
 import 'package:minaret/widget/scaffold.dart';
 import 'package:minaret/logic/common.dart';
 
-class ErrorScreen extends StatelessWidget {
-  final String errorMessage;
-  ErrorScreen(this.errorMessage);
+class ProgressScreen extends StatelessWidget {
+  final ProgressStruct data;
+  ProgressScreen(this.data);
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +16,19 @@ class ErrorScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(FontAwesomeIcons.syncAlt, size: 40, color: appThemeColor),
+            Icon(
+              data.icon,
+              size: 40,
+              color: appThemeColor,
+            ),
             SizedBox(height: 20),
             Text(
-              errorMessage,
+              data.message,
+              textAlign: TextAlign.center,
               style: TextStyle(
+                fontSize: 18,
                 color: appThemeColor,
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
               ),
             ),
           ],

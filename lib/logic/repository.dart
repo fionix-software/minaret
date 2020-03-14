@@ -14,7 +14,7 @@ import 'package:minaret/model/pt_zone.dart';
 class ESolatRepository {
   // retrieve zone ;ist
   Future<ErrorStatusEnum> retrieveZoneList() async {
-    // retrive zone list
+    // retrieve zone list
     var retrieveZoneListReturn = await _retrieveZoneList();
     if (retrieveZoneListReturn == null || retrieveZoneListReturn.isEmpty) {
       return ErrorStatusEnum.ERROR_RETRIEVE_ZONE_LIST;
@@ -31,7 +31,7 @@ class ESolatRepository {
   Future<ErrorStatusEnum> retrieveZoneData(String zoneCode) async {
     // retrieve zone data
     var retrieveZoneDataReturn = await _retrieveZoneDataList(zoneCode);
-    if (retrieveZoneDataReturn.isEmpty || retrieveZoneDataReturn == null) {
+    if (retrieveZoneDataReturn == null || retrieveZoneDataReturn.isEmpty) {
       return ErrorStatusEnum.ERROR_RETRIEVE_ZONE_DATA;
     }
     // save into database

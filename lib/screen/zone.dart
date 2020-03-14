@@ -17,9 +17,6 @@ class ZoneScreen extends StatefulWidget {
 }
 
 class _ZoneScreenState extends State<ZoneScreen> {
-  // setting key and parameter
-  final GlobalKey<ScaffoldState> _scaffold = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<PrayerTimeZone>(
@@ -33,14 +30,16 @@ class _ZoneScreenState extends State<ZoneScreen> {
           ),
           SizedBox.expand(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 buildScreenTitle('Pick your zone by your state\'s district.'),
+                Text('Touch on star to select'),
                 SizedBox(height: 40),
                 buildListView(context, widget.zoneList),
               ],
             ),
           ),
-          _scaffold,
+          null,
         );
       },
     );

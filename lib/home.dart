@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:minaret/logic/common.dart';
-import 'package:minaret/screen/error.dart';
+import 'package:minaret/logic/progress.dart';
 import 'package:minaret/screen/home.dart';
-import 'package:minaret/screen/loading.dart';
+import 'package:minaret/screen/progress.dart';
 import 'package:minaret/bloc/prayer_time_bloc.dart';
 
 // page
@@ -50,13 +50,15 @@ class _HomePageContentState extends State<HomePageContent> {
       child: BlocBuilder<PrayerTimeBloc, PrayerTimeState>(
         builder: (BuildContext context, PrayerTimeState state) {
           if (state is PrayerTimeError) {
-            return ErrorScreen(state.errorMessage);
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, state.errorMessage));
           } else if (state is PrayerTimeLoadSuccess) {
             return HomeScreen(state.zone, state.zoneData);
+          } else if (state is PrayerTimeRetrieving) {
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_RETRIEVING));
           } else if (state is PrayerTimeLoading) {
-            return LoadingScreen();
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_LOADING));
           } else {
-            return ErrorScreen(errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]);
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]));
           }
         },
       ),
