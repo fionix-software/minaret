@@ -39,7 +39,10 @@ Currently Fionix only consist of one person. You can find him on twitter, [@Naze
 
 # Convention and branching
 
-Flutter already have implemented effective code style checker, which means less human job in standardizing the code style. However, implementation of design patterns and best practices element in the source code is welcomed but make sure it do more benefit than do harm.
+Flutter already have implemented effective code style checker, which means less human job in standardizing the code style. For now, the only exceptions are stated as below:
+- Disable dartfmt's line length by set it to value 0
+
+However, implementation of design patterns and best practices in the source code is welcomed but make sure it do more benefit than do harm.
 
 Branching format is **type**/**change-title**. Type is only applicable to feature and fix. Pull request is considered a feature branch. Make sure your title consists of 2 to 5 word sentence. The title should be clear and meaningful. Use '-' to substitute the space between word, and not '\_'. Branch name should be singular for both type and change title.
 
@@ -49,10 +52,12 @@ Fionix is a brand of a collection of open source software and game title. One of
 
 # Contribution
 
-You can contribute in many ways. You don't have to contribute code and you can contribute by planning evens, design, write documentations, reviews, promotes and many more! Refer here for more. You can direct message [@NazebZurati](https://twitter.com/NazebZurati) on twitter for inquiries.
+You can contribute in many ways. You don't have to contribute code and you can contribute by planning evens, design, write documentations, reviews, promotes and many more! Refer [here](https://opensource.guide/how-to-contribute/) for more. You can direct message the maintainer on twitter (as stated above) for inquiries.
 
 If you were to contribute to the project by code, please follow Github's Fork & Pull guide stated [here](https://reflectoring.io/github-fork-and-pull/). Make sure to update your forked repository to upstream before working on it, or at least before submitting the changes. After submitting the changes, please make a pull request and have a discussion. Make sure to follow the branching model.
 
 # License
 
-This software source code is licensed under GNU General Public License (GPL) v3.0. You may not reuse Fionix brand, the logo, project name and other Fionix related identity as it is trademarked.
+This software source code is licensed under GNU General Public License (GPL) v3.0. 
+
+You may not use any Fionix's project and brand identity (including project name, project icon / logo, Fionix logo etc.) and please do respect the decision.
