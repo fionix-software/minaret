@@ -51,16 +51,20 @@ class _ZonePageContentState extends State<ZonePageContent> {
         builder: (BuildContext context, PrayerZoneState state) {
           // zone loading
           if (state is PrayerZoneError) {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, state.errorMessage));
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, state.errorMessage), retryCallback);
           } else if (state is PrayerZoneLoadSuccess) {
             return ZoneScreen(state.zone);
           } else if (state is PrayerZoneLoading) {
             return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_LOADING));
           } else {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]));
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]), retryCallback);
           }
         },
       ),
     );
+  }
+
+  void retryCallback() {
+    BlocProvider.of<PrayerZoneBloc>(context).add(PrayerZoneLoad());
   }
 }

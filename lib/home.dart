@@ -50,7 +50,7 @@ class _HomePageContentState extends State<HomePageContent> {
       child: BlocBuilder<PrayerTimeBloc, PrayerTimeState>(
         builder: (BuildContext context, PrayerTimeState state) {
           if (state is PrayerTimeError) {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, state.errorMessage));
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, state.errorMessage), errorCallback);
           } else if (state is PrayerTimeLoadSuccess) {
             return HomeScreen(state.zone, state.zoneData);
           } else if (state is PrayerTimeRetrieving) {
@@ -58,10 +58,14 @@ class _HomePageContentState extends State<HomePageContent> {
           } else if (state is PrayerTimeLoading) {
             return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_LOADING));
           } else {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]));
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]), errorCallback);
           }
         },
       ),
     );
+  }
+
+  void errorCallback() {
+    BlocProvider.of<PrayerTimeBloc>(context).add(PrayerTimeLoad());
   }
 }

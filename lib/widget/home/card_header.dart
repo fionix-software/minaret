@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:minaret/widget/screenTitle.dart';
 
-Widget buildHeader(String state, String code, String date, String dateHijri, String region) {
+Widget buildCardHeader(String state, String code, String date, String dateHijri, String region) {
   return Container(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

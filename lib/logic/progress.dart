@@ -14,14 +14,15 @@ class ProgressStruct {
 }
 
 Map<ProgressEnum, ProgressStruct> progressMap = {
-  ProgressEnum.PROGRESS_ERROR: ProgressStruct(FontAwesomeIcons.exclamationTriangle, 'n/a'), // error message will be using common error messages
+  ProgressEnum.PROGRESS_ERROR: ProgressStruct(FontAwesomeIcons.exclamationTriangle, 'Please press on the icon to retry'), // in error message, the message will be appended
   ProgressEnum.PROGRESS_LOADING: ProgressStruct(FontAwesomeIcons.syncAlt, 'Loading'),
   ProgressEnum.PROGRESS_RETRIEVING: ProgressStruct(FontAwesomeIcons.cloudDownloadAlt, 'Retrieving data'),
 };
 
 ProgressStruct getProgressData([ProgressEnum progressEnum = ProgressEnum.PROGRESS_ERROR, String message = '']) {
   if (message != null && message.isNotEmpty) {
-    return ProgressStruct(progressMap[progressEnum].icon, message);
+    // in error case
+    return ProgressStruct(progressMap[progressEnum].icon, progressMap[progressEnum].message + '\n' + message);
   }
   return ProgressStruct(progressMap[progressEnum].icon, progressMap[progressEnum].message);
 }
