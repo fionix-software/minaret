@@ -36,3 +36,7 @@ class DatabaseHelper {
     }
   }
 }
+
+void databaseErrorMessageLog(String operationTag, Error e) {
+  log(operationTag + ': ' + e.toString());
+}

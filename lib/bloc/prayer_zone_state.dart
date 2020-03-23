@@ -19,6 +19,15 @@ class PrayerZoneLoadSuccess extends PrayerZoneState {
       ];
 }
 
+class PrayerZoneRefreshSuccess extends PrayerZoneState {
+  final List<PrayerTimeZone> zone;
+  PrayerZoneRefreshSuccess(this.zone);
+  @override
+  List<Object> get props => [
+        this.zone,
+      ];
+}
+
 class PrayerZoneSetSuccess extends PrayerZoneState {
   @override
   List<Object> get props => [];

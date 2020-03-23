@@ -17,3 +17,8 @@ class PrayerZoneSet extends PrayerZoneEvent {
         this.zoneCode,
       ];
 }
+
+class PrayerZoneRefresh extends PrayerZoneEvent {
+  @override
+  List<Object> get props => [];
+}

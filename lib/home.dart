@@ -50,22 +50,25 @@ class _HomePageContentState extends State<HomePageContent> {
       child: BlocBuilder<PrayerTimeBloc, PrayerTimeState>(
         builder: (BuildContext context, PrayerTimeState state) {
           if (state is PrayerTimeError) {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, state.errorMessage), errorCallback);
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, state.errorMessage), retryCallback);
           } else if (state is PrayerTimeLoadSuccess) {
             return HomeScreen(state.zone, state.zoneData);
           } else if (state is PrayerTimeRetrieving) {
             return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_RETRIEVING));
-          } else if (state is PrayerTimeLoading) {
+          } else if (state is PrayerTimeLoading || state is PrayerTimeDataNotInitialized) {
             return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_LOADING));
           } else {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]), errorCallback);
+            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]), retryCallback);
           }
         },
       ),
     );
   }
 
-  void errorCallback() {
-    BlocProvider.of<PrayerTimeBloc>(context).add(PrayerTimeLoad());
+  void retryCallback() {
+    PrayerTimeEvent lastEvent = BlocProvider.of<PrayerTimeBloc>(context).lastEvent;
+    if (lastEvent != null) {
+      BlocProvider.of<PrayerTimeBloc>(context).add(lastEvent);
+    }
   }
 }

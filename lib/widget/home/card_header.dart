@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minaret/widget/screenTitle.dart';
+import 'package:minaret/widget/separator.dart';
 
 Widget buildCardHeader(String state, String code, String date, String dateHijri, String region) {
   return Container(
@@ -8,10 +9,10 @@ Widget buildCardHeader(String state, String code, String date, String dateHijri,
       children: <Widget>[
         buildScreenTitle(dateHijri),
         Text(date),
-        SizedBox(height: 40),
+        buildSpaceSeparator(),
         buildScreenTitle(state + " - " + code),
         Text(region),
-        SizedBox(height: 40),
+        buildSpaceSeparator(),
       ],
     ),
   );

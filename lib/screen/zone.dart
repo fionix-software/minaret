@@ -7,6 +7,8 @@ import 'package:minaret/model/pt_zone.dart';
 import 'package:minaret/widget/appbar.dart';
 import 'package:minaret/widget/scaffold.dart';
 import 'package:minaret/widget/screenTitle.dart';
+import 'package:minaret/widget/separator.dart';
+import 'package:minaret/widget/zone/icon_update.dart';
 
 class ZoneScreen extends StatefulWidget {
   final List<PrayerTimeZone> zoneList;
@@ -26,7 +28,9 @@ class _ZoneScreenState extends State<ZoneScreen> {
           buildAppBar(
             context,
             snapshot.data != null,
-            null,
+            [
+              iconUpdate(context),
+            ],
           ),
           SizedBox.expand(
             child: Column(
@@ -34,7 +38,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
               children: [
                 buildScreenTitle('Pick your zone by your state\'s district.'),
                 Text('Touch on star to select'),
-                SizedBox(height: 40),
+                buildSpaceSeparator(),
                 buildListView(context, widget.zoneList),
               ],
             ),

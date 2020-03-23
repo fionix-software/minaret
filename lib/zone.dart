@@ -54,7 +54,9 @@ class _ZonePageContentState extends State<ZonePageContent> {
             return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, state.errorMessage), retryCallback);
           } else if (state is PrayerZoneLoadSuccess) {
             return ZoneScreen(state.zone);
-          } else if (state is PrayerZoneLoading) {
+          } else if (state is PrayerZoneRefreshSuccess) {
+            return ZoneScreen(state.zone);
+          } else if (state is PrayerZoneLoading || state is PrayerZoneSetSuccess) {
             return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_LOADING));
           } else {
             return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]), retryCallback);
@@ -65,6 +67,9 @@ class _ZonePageContentState extends State<ZonePageContent> {
   }
 
   void retryCallback() {
-    BlocProvider.of<PrayerZoneBloc>(context).add(PrayerZoneLoad());
+    PrayerZoneEvent lastEvent = BlocProvider.of<PrayerZoneBloc>(context).lastEvent;
+    if (lastEvent != null) {
+      BlocProvider.of<PrayerZoneBloc>(context).add(lastEvent);
+    }
   }
 }

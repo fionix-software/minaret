@@ -1,3 +1,4 @@
+import 'package:minaret/database/helper.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:minaret/logic/common.dart';
 import 'package:minaret/model/pt_zone.dart';
@@ -25,6 +26,7 @@ class DatabaseItemPrayerZone {
       );
     ''');
     } catch (e) {
+      databaseErrorMessageLog('db_zone.create', e);
       returnStatus = ErrorStatusEnum.ERROR;
     }
     return returnStatus;
@@ -34,10 +36,11 @@ class DatabaseItemPrayerZone {
   Future<List<PrayerTimeZone>> getList(Database db) async {
     try {
       var onValue = await db.query(ptTable, orderBy: "$ptIsSelected DESC");
-      if (onValue.isNotEmpty) {
+      if (onValue != null && onValue.isNotEmpty) {
         return onValue.map((item) => PrayerTimeZone.fromJson(item)).toList();
       }
     } catch (e) {
+      databaseErrorMessageLog('db_zone.getList', e);
       return null;
     }
     return null;
@@ -47,10 +50,11 @@ class DatabaseItemPrayerZone {
   Future<PrayerTimeZone> getSelectedZone(Database db) async {
     try {
       var onValue = await db.query(ptTable, where: '$ptIsSelected=1');
-      if (onValue.isNotEmpty) {
+      if (onValue != null && onValue.isNotEmpty) {
         return PrayerTimeZone.fromJson(onValue[0]);
       }
     } catch (e) {
+      databaseErrorMessageLog('db_zone.getSelectedZone', e);
       return null;
     }
     return null;
@@ -60,7 +64,7 @@ class DatabaseItemPrayerZone {
   Future<ErrorStatusEnum> setSelectedZone(Database db, String code) async {
     // unselect all selected zone
     try {
-      db.rawUpdate(
+      await db.rawUpdate(
         '''
         UPDATE $ptTable
         SET $ptIsSelected=0
@@ -68,11 +72,12 @@ class DatabaseItemPrayerZone {
         ''',
       );
     } catch (e) {
+      databaseErrorMessageLog('db_zone.setSelectedZone.unselect', e);
       return ErrorStatusEnum.ERROR;
     }
     // select zone
     try {
-      db.rawUpdate(
+      await db.rawUpdate(
         '''
         UPDATE $ptTable
         SET $ptIsSelected=1
@@ -83,6 +88,7 @@ class DatabaseItemPrayerZone {
         ],
       );
     } catch (e) {
+      databaseErrorMessageLog('db_zone.setSelectedZone.select', e);
       return ErrorStatusEnum.ERROR;
     }
     return ErrorStatusEnum.OK;
@@ -92,7 +98,7 @@ class DatabaseItemPrayerZone {
   Future<ErrorStatusEnum> insert(Database db, Map<String, dynamic> data) async {
     // delete existing
     try {
-      db.delete(
+      await db.delete(
         ptTable,
         where: "$ptCode=?",
         whereArgs: [
@@ -100,12 +106,14 @@ class DatabaseItemPrayerZone {
         ],
       );
     } catch (e) {
+      databaseErrorMessageLog('db_zone.insert.delete', e);
       return ErrorStatusEnum.ERROR;
     }
     // insert new data
     try {
-      db.insert(ptTable, data);
+      await db.insert(ptTable, data);
     } catch (e) {
+      databaseErrorMessageLog('db_zone.insert.insert', e);
       return ErrorStatusEnum.ERROR;
     }
     return ErrorStatusEnum.OK;

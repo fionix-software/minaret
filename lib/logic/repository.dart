@@ -20,9 +20,9 @@ class ESolatRepository {
       return ErrorStatusEnum.ERROR_RETRIEVE_ZONE_LIST;
     }
     // save into database
-    retrieveZoneListReturn.forEach((item) async {
-      await DatabaseItemPrayerZone().insert(await DatabaseHelper.getInstance.database, item.toMap());
-    });
+    for (int index = 0; index < retrieveZoneListReturn.length; ++index) {
+      await DatabaseItemPrayerZone().insert(await DatabaseHelper.getInstance.database, retrieveZoneListReturn.elementAt(index).toMap());
+    }
     // return
     return ErrorStatusEnum.OK;
   }
@@ -35,9 +35,9 @@ class ESolatRepository {
       return ErrorStatusEnum.ERROR_RETRIEVE_ZONE_DATA;
     }
     // save into database
-    retrieveZoneDataReturn.forEach((item) async {
-      await DatabaseItemPrayerTime().insert(await DatabaseHelper.getInstance.database, item.toMap());
-    });
+    for (int index = 0; index < retrieveZoneDataReturn.length; ++index) {
+      await DatabaseItemPrayerTime().insert(await DatabaseHelper.getInstance.database, retrieveZoneDataReturn.elementAt(index).toMap());
+    }
     // return
     return ErrorStatusEnum.OK;
   }

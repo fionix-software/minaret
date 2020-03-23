@@ -1,5 +1,6 @@
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:minaret/database/helper.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:minaret/logic/common.dart';
 import 'package:minaret/model/pt_data.dart';
@@ -40,6 +41,7 @@ class DatabaseItemPrayerTime {
       );
     ''');
     } catch (e) {
+      databaseErrorMessageLog('db_data.create', e);
       return ErrorStatusEnum.ERROR;
     }
     return ErrorStatusEnum.OK;
@@ -60,10 +62,11 @@ class DatabaseItemPrayerTime {
           zone,
         ],
       );
-      if (onValue.isNotEmpty) {
+      if (onValue != null && onValue.isNotEmpty) {
         return PrayerTimeData.fromJson(onValue[0]);
       }
     } catch (e) {
+      databaseErrorMessageLog('db_data.getPrayerDataFromDate', e);
       return null;
     }
     // error
@@ -74,7 +77,7 @@ class DatabaseItemPrayerTime {
   Future<ErrorStatusEnum> insert(Database db, Map<String, dynamic> data) async {
     // delete existing
     try {
-      db.delete(
+      await db.delete(
         ptTable,
         where: "$ptDate=? AND $ptZone=?",
         whereArgs: [
@@ -83,12 +86,14 @@ class DatabaseItemPrayerTime {
         ],
       );
     } catch (e) {
+      databaseErrorMessageLog('db_data.insert.delete', e);
       return ErrorStatusEnum.ERROR;
     }
     // insert new data
     try {
-      db.insert(ptTable, data);
+      await db.insert(ptTable, data);
     } catch (e) {
+      databaseErrorMessageLog('db_data.insert.insert', e);
       return ErrorStatusEnum.ERROR;
     }
     return ErrorStatusEnum.OK;

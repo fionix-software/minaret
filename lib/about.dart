@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:minaret/widget/about/icon_github.dart';
+import 'package:minaret/widget/about/icon_site.dart';
 import 'package:minaret/widget/screenTitle.dart';
+import 'package:minaret/widget/separator.dart';
 import 'package:package_info/package_info.dart';
 import 'package:minaret/widget/appbar.dart';
 import 'package:minaret/widget/scaffold.dart';
@@ -12,7 +15,10 @@ class AboutPage extends StatelessWidget {
       buildAppBar(
         context,
         true,
-        null,
+        [
+          iconGithub(context),
+          iconSite(context),
+        ],
       ),
       buildContent(),
       null,
@@ -28,13 +34,20 @@ class AboutPage extends StatelessWidget {
           buildScreenTitle('Minaret'),
           FutureBuilder(
             future: PackageInfo.fromPlatform(),
-            builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
-              String version = (snapshot.hasData) ? ('Version ' + snapshot.data.version + ' (build ' + snapshot.data.buildNumber + ')') : '';
+            builder:
+                (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
+              String version = (snapshot.hasData)
+                  ? ('Version ' +
+                      snapshot.data.version +
+                      ' (build ' +
+                      snapshot.data.buildNumber +
+                      ')')
+                  : '';
               return Text(version);
             },
           ),
           Text('Open source software by Fionix'),
-          SizedBox(height: 40),
+          buildSpaceSeparator(),
           buildScreenTitle('Third Party Credit'),
           Text('Varela Font (Open Font)'),
           Text('Font Awesome Icons (CC by 4.0)'),
@@ -42,6 +55,11 @@ class AboutPage extends StatelessWidget {
           Text('Equatable lib (MIT)'),
           Text('Flutter Bloc lib (MIT)'),
           Text('Flutter Launcher Icon lib (MIT)'),
+          buildSpaceSeparator(),
+          buildScreenTitle('Disclaimer'),
+          Text('All data only applicable for Malaysia only.'),
+          Text('All prayer time data is hosted by e-Solat portal.'),
+          Text('We doesn\'t collect any personal and sensitive data.'),
         ],
       ),
     );

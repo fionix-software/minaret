@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:minaret/logic/common.dart';
@@ -11,14 +10,19 @@ part 'prayer_time_event.dart';
 part 'prayer_time_state.dart';
 
 class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
+  PrayerTimeEvent lastEvent;
   ESolatRepository repo = ESolatRepository();
 
   @override
   PrayerTimeState get initialState => PrayerTimeLoading();
-
+  
   @override
   Stream<PrayerTimeState> mapEventToState(PrayerTimeEvent event) async* {
     yield PrayerTimeLoading();
+    // register current event as last event
+    if (event is PrayerTimeLoad || event is PrayerTimeRefresh) {
+      lastEvent = event;
+    }
     // load prayer time data
     if (event is PrayerTimeLoad) {
       // get selected zone
@@ -46,6 +50,7 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
         yield PrayerTimeLoadSuccess(getSelectedZoneReturn, getSelectedZoneDataRetryReturn);
         return;
       }
+      // prayer time load success
       yield PrayerTimeLoadSuccess(getSelectedZoneReturn, getSelectedZoneDataReturn);
       return;
     } else if (event is PrayerTimeRefresh) {
