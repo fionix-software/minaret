@@ -8,7 +8,6 @@ import 'package:minaret/widget/appbar.dart';
 import 'package:minaret/widget/scaffold.dart';
 
 class AboutPage extends StatelessWidget {
-  // build
   @override
   Widget build(BuildContext context) {
     return buildScaffold(
@@ -34,15 +33,8 @@ class AboutPage extends StatelessWidget {
           buildScreenTitle('Minaret'),
           FutureBuilder(
             future: PackageInfo.fromPlatform(),
-            builder:
-                (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
-              String version = (snapshot.hasData)
-                  ? ('Version ' +
-                      snapshot.data.version +
-                      ' (build ' +
-                      snapshot.data.buildNumber +
-                      ')')
-                  : '';
+            builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
+              String version = (snapshot.hasData) ? ('Version ' + snapshot.data.version + ' (build ' + snapshot.data.buildNumber + ')') : '';
               return Text(version);
             },
           ),

@@ -12,7 +12,6 @@ class PrayerZoneLoading extends PrayerZoneState {
 class PrayerZoneLoadSuccess extends PrayerZoneState {
   final List<PrayerTimeZone> zone;
   PrayerZoneLoadSuccess(this.zone);
-
   @override
   List<Object> get props => [
         this.zone,
@@ -36,7 +35,6 @@ class PrayerZoneSetSuccess extends PrayerZoneState {
 class PrayerZoneError extends PrayerZoneState {
   final String errorMessage;
   PrayerZoneError(this.errorMessage);
-
   @override
   List<Object> get props => [
         this.errorMessage,

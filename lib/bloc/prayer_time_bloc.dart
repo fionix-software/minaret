@@ -15,7 +15,7 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
 
   @override
   PrayerTimeState get initialState => PrayerTimeLoading();
-  
+
   @override
   Stream<PrayerTimeState> mapEventToState(PrayerTimeEvent event) async* {
     yield PrayerTimeLoading();
@@ -47,6 +47,7 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
           yield PrayerTimeError(errorStatusEnumMap[ErrorStatusEnum.ERROR_GET_SELECTED_ZONE_DATA]);
           return;
         }
+        // prayer time load success
         yield PrayerTimeLoadSuccess(getSelectedZoneReturn, getSelectedZoneDataRetryReturn);
         return;
       }
@@ -61,17 +62,23 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
         yield PrayerTimeDataNotInitialized();
         return;
       }
-      // retrieve selected zone data (if fail, it will use existing data)
-      await repo.retrieveZoneData(getSelectedZoneReturn.code);
+      // retrieve selected zone data
+      var retrieveZoneDataReturn = await repo.retrieveZoneData(getSelectedZoneReturn.code);
+      if (retrieveZoneDataReturn != ErrorStatusEnum.OK) {
+        yield PrayerTimeError(errorStatusEnumMap[ErrorStatusEnum.ERROR_RETRIEVE_ZONE_DATA]);
+        return;
+      }
       // retry getting selected zone data
       var getSelectedZoneDataReturn = await repo.getSelectedZoneData(getSelectedZoneReturn.code);
       if (getSelectedZoneDataReturn == null) {
         yield PrayerTimeError(errorStatusEnumMap[ErrorStatusEnum.ERROR_GET_SELECTED_ZONE_DATA]);
         return;
       }
+      // prayer time lload success
       yield PrayerTimeLoadSuccess(getSelectedZoneReturn, getSelectedZoneDataReturn);
       return;
     }
+    // unknown state
     yield PrayerTimeDataUnknownState();
     return;
   }

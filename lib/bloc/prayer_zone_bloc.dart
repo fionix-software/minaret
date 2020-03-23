@@ -42,6 +42,7 @@ class PrayerZoneBloc extends Bloc<PrayerZoneEvent, PrayerZoneState> {
         yield PrayerZoneError(errorStatusEnumMap[ErrorStatusEnum.ERROR_GET_ZONE_LIST]);
         return;
       }
+      // prayer zone load sucess
       yield PrayerZoneLoadSuccess(getZoneRetryReturn);
       return;
     } else if (event is PrayerZoneSet) {
@@ -51,6 +52,7 @@ class PrayerZoneBloc extends Bloc<PrayerZoneEvent, PrayerZoneState> {
         yield PrayerZoneError(errorStatusEnumMap[setZoneReturn]);
         return;
       }
+      // prayer zone set success
       yield PrayerZoneSetSuccess();
       return;
     } else if (event is PrayerZoneRefresh) {
@@ -79,9 +81,11 @@ class PrayerZoneBloc extends Bloc<PrayerZoneEvent, PrayerZoneState> {
         yield PrayerZoneError(errorStatusEnumMap[ErrorStatusEnum.ERROR_GET_ZONE_LIST]);
         return;
       }
+      // prayer zone refresh success
       yield PrayerZoneRefreshSuccess(getZoneListReturn);
       return;
     }
+    // unknown state
     yield PrayerZoneUnknownState();
     return;
   }
