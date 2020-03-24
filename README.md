@@ -6,6 +6,8 @@ This application uses Flutter framework and Dart programming language to ensure 
 
 What is open source and why? Open-source software (OSS) is a type of computer software in which source code is released under a license in which the copyright holder grants users the rights to study, change, and distribute the software to anyone and for any purpose. Open-source software embrace strong values of community, collaboration, and transparency, for the mutual benefit of the platform and its users. Other than that, it is more cost-effective, flexible, and secure.
 
+Officialy available on [Google Play Store](https://play.google.com/store/apps/details?id=net.fionix.moments).
+
 # Limitation
 
 - Unable to support homescreen app widget and notification widget (Non-cross platform feature)
@@ -42,7 +44,7 @@ Currently Fionix only consist of one person. You can find him on twitter, [@Naze
 Flutter already have implemented effective code style checker, which means less human job in standardizing the code style. For now, the only exceptions are stated as below:
 - Disable dartfmt's line length by set it to value 0
 
-However, implementation of design patterns and best practices in the source code is welcomed but make sure it do more benefit than do harm.
+However, implementation of design patterns and best practices in the source code is welcome but make sure it do more benefit than do harm.
 
 Branching format is **type**/**change-title**. Type is only applicable to feature and fix. Pull request is considered a feature branch. Make sure your title consists of 2 to 5 word sentence. The title should be clear and meaningful. Use '-' to substitute the space between word, and not '\_'. Branch name should be singular for both type and change title.
 
@@ -60,4 +62,4 @@ If you were to contribute to the project by code, please follow Github's Fork & 
 
 This software source code is licensed under GNU General Public License (GPL) v3.0. 
 
-You may not use any Fionix's project and brand identity (including project name, project icon / logo, Fionix logo etc.) and please do respect the decision.
+You cannot use any Fionix's project and brand identity (including project name, project icon / logo, Fionix logo etc.) and please do respect the decision.
