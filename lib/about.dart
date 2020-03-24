@@ -49,9 +49,7 @@ class AboutPage extends StatelessWidget {
           Text('Flutter Launcher Icon lib (MIT)'),
           buildSpaceSeparator(),
           buildScreenTitle('Disclaimer'),
-          Text('All data only applicable for Malaysia only.'),
-          Text('All prayer time data is hosted by e-Solat portal.'),
-          Text('We doesn\'t collect any personal and sensitive data.'),
+          Text('All data only applicable for Malaysia only. All prayer time data is hosted by e-Solat portal. We doesn\'t collect any personal and sensitive data.'),
         ],
       ),
     );

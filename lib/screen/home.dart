@@ -42,12 +42,27 @@ class _HomeScreenState extends State<HomeScreen> {
             widget.zoneData.hijri,
             widget.zone.region,
           ),
-          buildTimeCard('Imsak', widget.zoneData.imsak),
-          buildTimeCard('Subuh', widget.zoneData.fajr),
-          buildTimeCard('Syuruk', widget.zoneData.syuruk),
-          buildTimeCard('Zohor', widget.zoneData.dhuhr),
-          buildTimeCard('Asar', widget.zoneData.asr),
-          buildTimeCard('Maghrib', widget.zoneData.maghrib),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              buildTimeCard('Imsak', widget.zoneData.imsak),
+              buildTimeCard('Subuh', widget.zoneData.fajr),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              buildTimeCard('Syuruk', widget.zoneData.syuruk),
+              buildTimeCard('Zohor', widget.zoneData.dhuhr),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              buildTimeCard('Asar', widget.zoneData.asr),
+              buildTimeCard('Maghrib', widget.zoneData.maghrib),
+            ],
+          ),
           buildTimeCard('Isyak', widget.zoneData.isha),
         ],
       ),

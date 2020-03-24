@@ -32,16 +32,14 @@ class _ZoneScreenState extends State<ZoneScreen> {
               iconUpdate(context),
             ],
           ),
-          SizedBox.expand(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildScreenTitle('Pick your zone by your state\'s district.'),
-                Text('Touch on star to select'),
-                buildSpaceSeparator(),
-                buildListView(context, widget.zoneList),
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildScreenTitle('Pick your zone by your state\'s district.'),
+              Text('Touch on star to select'),
+              buildSpaceSeparator(),
+              buildListView(context, widget.zoneList),
+            ],
           ),
           null,
         );
@@ -74,7 +72,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
   // build card
   Widget buildCard(String zoneStr, String descriptionStr, bool isHighlighted, Function onTapIconFunction) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 15),
+      padding: EdgeInsets.symmetric(vertical: 5),
       child: ListTile(
         title: Text(zoneStr),
         subtitle: Text(descriptionStr),

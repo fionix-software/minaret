@@ -12,9 +12,9 @@ Scaffold buildScaffold(AppBar appBar, Widget scaffoldBody, GlobalKey<ScaffoldSta
       child: Padding(
         padding: EdgeInsets.fromLTRB(
           40,
+          20,
           40,
           40,
-          80,
         ),
         child: scaffoldBody,
       ),
