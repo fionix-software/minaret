@@ -33,37 +33,23 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           buildCardHeader(
+            context,
             widget.zone.state,
             widget.zone.code,
             widget.zoneData.date,
             widget.zoneData.hijri,
             widget.zone.region,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              buildTimeCard('Imsak', widget.zoneData.imsak),
-              buildTimeCard('Subuh', widget.zoneData.fajr),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              buildTimeCard('Syuruk', widget.zoneData.syuruk),
-              buildTimeCard('Zohor', widget.zoneData.dhuhr),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              buildTimeCard('Asar', widget.zoneData.asr),
-              buildTimeCard('Maghrib', widget.zoneData.maghrib),
-            ],
-          ),
-          buildTimeCard('Isyak', widget.zoneData.isha),
+          buildTimeCard(context, 'Imsak', widget.zoneData.imsak),
+          buildTimeCard(context, 'Subuh', widget.zoneData.fajr),
+          buildTimeCard(context, 'Syuruk', widget.zoneData.syuruk),
+          buildTimeCard(context, 'Zohor', widget.zoneData.dhuhr),
+          buildTimeCard(context, 'Asar', widget.zoneData.asr),
+          buildTimeCard(context, 'Maghrib', widget.zoneData.maghrib),
+          buildTimeCard(context, 'Isyak', widget.zoneData.isha),
         ],
       ),
       null,

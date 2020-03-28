@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:minaret/logic/common.dart';
 
 // build common appbar
 AppBar buildAppBar(BuildContext context, bool enableBackButton, List<Widget> appBarActions) {
@@ -9,7 +8,7 @@ AppBar buildAppBar(BuildContext context, bool enableBackButton, List<Widget> app
         ? IconButton(
             icon: Icon(
               FontAwesomeIcons.arrowLeft,
-              color: appThemeColor,
+              color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
               Navigator.of(context).pop();

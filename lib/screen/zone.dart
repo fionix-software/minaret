@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minaret/bloc/prayer_zone_bloc.dart';
-import 'package:minaret/logic/common.dart';
 import 'package:minaret/model/pt_zone.dart';
 import 'package:minaret/widget/appbar.dart';
 import 'package:minaret/widget/scaffold.dart';
-import 'package:minaret/widget/screenTitle.dart';
 import 'package:minaret/widget/separator.dart';
+import 'package:minaret/widget/title.dart';
 import 'package:minaret/widget/zone/icon_update.dart';
 
 class ZoneScreen extends StatefulWidget {
@@ -35,7 +34,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildScreenTitle('Pick your zone by your state\'s district.'),
+              buildTitle(context, 'Pick your zone by your state\'s district.'),
               Text('Touch on star to select'),
               buildSpaceSeparator(),
               buildListView(context, widget.zoneList),
@@ -78,11 +77,15 @@ class _ZoneScreenState extends State<ZoneScreen> {
         subtitle: Text(descriptionStr),
         trailing: GestureDetector(
           onTap: onTapIconFunction,
-          child: Icon(
-            FontAwesomeIcons.solidStar,
-            color: (isHighlighted) ? appThemeColor : Colors.black,
+          child: Padding(
+            padding: EdgeInsets.all(5),
+            child: Icon(
+              FontAwesomeIcons.solidStar,
+              color: (isHighlighted) ? Theme.of(context).primaryColor : Colors.black,
+            ),
           ),
         ),
+        contentPadding: EdgeInsets.zero,
       ),
     );
   }

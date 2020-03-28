@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:minaret/about.dart';
 import 'package:minaret/home.dart';
+import 'package:minaret/theme/default.dart';
 import 'package:minaret/zone.dart';
 
 void main() => runApp(MainApp());
@@ -12,9 +13,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Minaret',
-      theme: ThemeData(
-        fontFamily: 'Varela',
-      ),
+      theme: defaultThemeData(),
       initialRoute: '/home',
       routes: {
         '/home': (_) => HomePage(),

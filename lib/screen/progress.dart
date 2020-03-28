@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:minaret/logic/progress.dart';
 import 'package:minaret/widget/scaffold.dart';
-import 'package:minaret/logic/common.dart';
 
 typedef RetryCallback = void Function();
 
@@ -20,11 +19,8 @@ class ProgressScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconButton(
-              icon: Icon(
-                data.icon,
-                size: 40,
-                color: appThemeColor,
-              ),
+              padding: EdgeInsets.all(5),
+              icon: Icon(data.icon),
               onPressed: () {
                 // call callback (only applicable to ERROR screen)
                 if (retryCallback != null) {
@@ -32,14 +28,12 @@ class ProgressScreen extends StatelessWidget {
                 }
               },
             ),
-            SizedBox(height: 20),
             Text(
               data.message,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 18,
-                color: appThemeColor,
-                fontWeight: FontWeight.bold,
+                fontSize: Theme.of(context).textTheme.subhead.fontSize,
+                color: Theme.of(context).primaryColor,
               ),
             ),
           ],

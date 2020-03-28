@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
 Widget buildSpaceSeparator() {
-  return SizedBox(height: 25);
+  return SizedBox(height: 20);
 }

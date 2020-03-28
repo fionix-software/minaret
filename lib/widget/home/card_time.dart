@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget buildTimeCard(String salatTime, String time) {
+Widget buildTimeCard(BuildContext context, String salatTime, String time) {
   return Card(
     elevation: 0,
     child: Container(
@@ -11,7 +11,9 @@ Widget buildTimeCard(String salatTime, String time) {
           Text(salatTime),
           Text(
             time,
-            style: TextStyle(fontSize: 25),
+            style: TextStyle(
+              fontSize: Theme.of(context).textTheme.title.fontSize,
+            ),
           ),
         ],
       ),

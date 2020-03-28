@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:minaret/widget/about/icon_github.dart';
 import 'package:minaret/widget/about/icon_site.dart';
-import 'package:minaret/widget/screenTitle.dart';
 import 'package:minaret/widget/separator.dart';
+import 'package:minaret/widget/title.dart';
 import 'package:package_info/package_info.dart';
 import 'package:minaret/widget/appbar.dart';
 import 'package:minaret/widget/scaffold.dart';
@@ -19,18 +19,18 @@ class AboutPage extends StatelessWidget {
           iconSite(context),
         ],
       ),
-      buildContent(),
+      buildContent(context),
       null,
     );
   }
 
-  Widget buildContent() {
+  Widget buildContent(BuildContext context) {
     return SizedBox.expand(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          buildScreenTitle('Minaret'),
+          buildTitle(context, 'Minaret'),
           FutureBuilder(
             future: PackageInfo.fromPlatform(),
             builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
@@ -40,7 +40,7 @@ class AboutPage extends StatelessWidget {
           ),
           Text('Open source software by Fionix'),
           buildSpaceSeparator(),
-          buildScreenTitle('Third Party Credit'),
+          buildTitle(context, 'Third Party Credit'),
           Text('Varela Font (Open Font)'),
           Text('Font Awesome Icons (CC by 4.0)'),
           Text('SQFLite lib (MIT)'),
@@ -48,7 +48,7 @@ class AboutPage extends StatelessWidget {
           Text('Flutter Bloc lib (MIT)'),
           Text('Flutter Launcher Icon lib (MIT)'),
           buildSpaceSeparator(),
-          buildScreenTitle('Disclaimer'),
+          buildTitle(context, 'Disclaimer'),
           Text('All data only applicable for Malaysia only. All prayer time data is hosted by e-Solat portal. We doesn\'t collect any personal and sensitive data.'),
         ],
       ),

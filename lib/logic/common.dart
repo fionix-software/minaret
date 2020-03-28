@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 enum ErrorStatusEnum {
   OK,
   ERROR,
@@ -57,5 +55,3 @@ Map<String, String> hijriMonthNameMap = {
   "11": "Zulqa'idah",
   "12": "Zulhijjah",
 };
-
-Color appThemeColor = Color.fromARGB(255, 39, 174, 96);
