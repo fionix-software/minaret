@@ -81,7 +81,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
             padding: EdgeInsets.all(5),
             child: Icon(
               FontAwesomeIcons.solidStar,
-              color: (isHighlighted) ? Theme.of(context).primaryColor : Colors.black,
+              color: (isHighlighted) ? Theme.of(context).primaryColor : Theme.of(context).iconTheme.color,
             ),
           ),
         ),

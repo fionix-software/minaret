@@ -15,8 +15,6 @@ AppBar buildAppBar(BuildContext context, bool enableBackButton, List<Widget> app
             },
           )
         : Container(),
-    backgroundColor: Colors.white,
     actions: appBarActions,
-    elevation: 0,
   );
 }

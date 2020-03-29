@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Widget buildTimeCard(BuildContext context, String salatTime, String time) {
   return Card(
-    elevation: 0,
+    margin: EdgeInsets.zero,
     child: Container(
       margin: EdgeInsets.only(bottom: 5),
       child: Column(

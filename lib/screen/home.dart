@@ -5,6 +5,7 @@ import 'package:minaret/widget/appbar.dart';
 import 'package:minaret/widget/home/card_time.dart';
 import 'package:minaret/widget/home/card_header.dart';
 import 'package:minaret/widget/home/icon_about.dart';
+import 'package:minaret/widget/home/icon_settings.dart';
 import 'package:minaret/widget/home/icon_update.dart';
 import 'package:minaret/widget/home/icon_zone.dart';
 import 'package:minaret/widget/scaffold.dart';
@@ -28,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         [
           iconZone(context),
           iconUpdate(context),
+          iconSettings(context),
           iconAbout(context),
         ],
       ),

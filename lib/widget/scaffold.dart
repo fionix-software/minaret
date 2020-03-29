@@ -6,7 +6,6 @@ Scaffold buildScaffold(AppBar appBar, Widget scaffoldBody, GlobalKey<ScaffoldSta
     resizeToAvoidBottomPadding: false,
     key: globalKey,
     appBar: appBar,
-    backgroundColor: Colors.white,
     body: ScrollConfiguration(
       behavior: MyBehavior(),
       child: Padding(

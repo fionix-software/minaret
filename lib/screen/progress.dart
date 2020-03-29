@@ -20,7 +20,10 @@ class ProgressScreen extends StatelessWidget {
           children: [
             IconButton(
               padding: EdgeInsets.all(5),
-              icon: Icon(data.icon),
+              icon: Icon(
+                data.icon,
+                color: Theme.of(context).primaryColor,
+              ),
               onPressed: () {
                 // call callback (only applicable to ERROR screen)
                 if (retryCallback != null) {
