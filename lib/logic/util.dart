@@ -17,6 +17,11 @@ String fixTimeFormat(String time) {
   return DateFormat('HH:mm').format(DateFormat('HH:mm:ss').parse(time));
 }
 
+// set 12 hour time format
+String convert12HourTimeFormat(String time) {
+  return DateFormat('hh:mm a').format(DateFormat('HH:mm').parse(time));
+}
+
 // fix date format
 String fixDateFormat(String date) {
   try {

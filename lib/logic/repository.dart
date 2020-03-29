@@ -83,7 +83,13 @@ class ESolatRepository {
   String _urlMain = "https://www.e-solat.gov.my/";
   Future<List<PrayerTimeZone>> _retrieveZoneList() async {
     // get response from url
-    Response response = await httpGet(_urlMain).timeout(Duration(seconds: 5));
+    Response response;
+    try {
+      response = await httpGet(_urlMain).timeout(Duration(seconds: 5));
+    } catch (e) {
+      // timeout
+      return null;
+    }
     if (response == null || response.statusCode != 200) {
       return null;
     }
@@ -111,7 +117,13 @@ class ESolatRepository {
   String _urlData = "https://www.e-solat.gov.my/index.php?r=esolatApi/takwimsolat";
   Future<List<PrayerTimeData>> _retrieveZoneDataList(String zone) async {
     // get response from url
-    Response response = await httpGet(_urlData + "&period=year&zone=" + zone).timeout(Duration(seconds: 5));
+    Response response;
+    try {
+      response = await httpGet(_urlData + "&period=year&zone=" + zone).timeout(Duration(seconds: 5));
+    } catch (e) {
+      // after timeout
+      return null;
+    }
     if (response == null || response.statusCode != 200 || jsonDecode(response.body.toString())['prayerTime'] == null) {
       return null;
     }

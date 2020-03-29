@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minaret/widget/appbar.dart';
 import 'package:minaret/widget/scaffold.dart';
 import 'package:minaret/widget/separator.dart';
+import 'package:minaret/widget/settings/hour_format.dart';
 import 'package:minaret/widget/title.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -18,7 +18,7 @@ class SettingsPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           buildTitle(context, 'Settings'),
-          Text('Customize behavior'),
+          Text('Customize application\'s behavior'),
           buildSpaceSeparator(),
           buildListView(context),
         ],
@@ -27,26 +27,11 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  // build listview
   Widget buildListView(BuildContext context) {
     return Expanded(
       child: ListView(
         children: <Widget>[
-          ListTile(
-            title: Text('24-Hour format'),
-            subtitle: Text('Change prayer time in 24 hour format'),
-            trailing: IconButton(
-              padding: EdgeInsets.all(5.0),
-              icon: Icon(
-                FontAwesomeIcons.toggleOff,
-                color: Theme.of(context).iconTheme.color,
-              ),
-              onPressed: () {
-                // TODO:
-              },
-            ),
-            contentPadding: EdgeInsets.zero,
-          )
+          SettingHourFormat()
         ],
       ),
     );
