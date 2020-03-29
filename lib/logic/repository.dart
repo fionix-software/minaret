@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:minaret/database/db_data.dart';
 import 'package:minaret/database/db_zone.dart';
 import 'package:minaret/database/helper.dart';
@@ -114,11 +115,14 @@ class ESolatRepository {
     if (response == null || response.statusCode != 200 || jsonDecode(response.body.toString())['prayerTime'] == null) {
       return null;
     }
+    // initialize locale data
+    await initializeDateFormatting('ms_MY', null);
     // sanitize result
     List<PrayerTimeData> returnValues = List<PrayerTimeData>();
     returnValues = (jsonDecode(response.body.toString())['prayerTime'] as List).map(
       (item) {
         item['zone'] = zone;
+        item['date'] = fixDateFormat(item['date']);
         item['hijri'] = fixHijriFormat(item['hijri']);
         item['imsak'] = fixTimeFormat(item['imsak']);
         item['fajr'] = fixTimeFormat(item['fajr']);

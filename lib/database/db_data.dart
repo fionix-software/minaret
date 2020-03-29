@@ -1,4 +1,3 @@
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:minaret/database/helper.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -50,8 +49,7 @@ class DatabaseItemPrayerTime {
   // get prayer data from date
   Future<PrayerTimeData> getPrayerDataFromDate(Database db, String zone, DateTime date) async {
     // parse date as Malaysia time format
-    await initializeDateFormatting('ms_MY', null);
-    String dateStr = DateFormat('dd-MMM-yyyy', 'ms').format(date);
+    String dateStr = DateFormat('dd MMMM yyyy').format(date);
     // get prayer data from date
     try {
       var onValue = await db.query(
