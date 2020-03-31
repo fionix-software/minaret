@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minaret/logic/settings.dart';
 
-class SettingHourFormat extends StatefulWidget {
+class SettingsHourFormat extends StatefulWidget {
   @override
-  _SettingHourFormatState createState() => _SettingHourFormatState();
+  _SettingsHourFormatState createState() => _SettingsHourFormatState();
 }
 
-class _SettingHourFormatState extends State<SettingHourFormat> {
+class _SettingsHourFormatState extends State<SettingsHourFormat> {
   @override
   Widget build(BuildContext context) {
     return ListTile(

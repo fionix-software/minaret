@@ -3,6 +3,7 @@ import 'package:minaret/widget/appbar.dart';
 import 'package:minaret/widget/scaffold.dart';
 import 'package:minaret/widget/separator.dart';
 import 'package:minaret/widget/settings/hour_format.dart';
+import 'package:minaret/widget/settings/theme.dart';
 import 'package:minaret/widget/title.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -31,7 +32,8 @@ class SettingsPage extends StatelessWidget {
     return Expanded(
       child: ListView(
         children: <Widget>[
-          SettingHourFormat()
+          SettingsHourFormat(),
+          SettingsTheme()
         ],
       ),
     );
