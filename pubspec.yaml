@@ -1,7 +1,7 @@
 name: minaret
 description: Minaret is a cross platform e-Solat application
 
-version: 4.002+17
+version: 4.003+18
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

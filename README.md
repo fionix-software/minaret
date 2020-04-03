@@ -2,6 +2,8 @@
 
 Minaret is a minimal cross platform e-Solat application. Minaret is a slender tower, typically part of a mosque, with a balcony from which a muezzin calls Muslims to prayer. e-Solat is a Malaysia prayer time portal and it is regulated by Falak Unit Jabatan Kemajuan Islam Malaysia (JAKIM).
 
+Minaret is a rebrand of Moments, starts from version 4. Its initial development is on 4 Feb 2017 and was first published on 6 Feb 2017. Minaret starts its development 14 Jan 2020 and first published on 23 Mar 2020.
+
 This application uses Flutter framework and Dart programming language to ensure compatibility across multiple platform. Flutter is Google’s UI toolkit for building beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.
 
 What is open source and why? Open-source software (OSS) is a type of computer software in which source code is released under a license in which the copyright holder grants users the rights to study, change, and distribute the software to anyone and for any purpose. Open-source software embrace strong values of community, collaboration, and transparency, for the mutual benefit of the platform and its users. Other than that, it is more cost-effective, flexible, and secure.
@@ -28,7 +30,7 @@ flutter run --release
 
 # Support
 
-If there is any issue arise, please use the [issue tracker](https://github.com/nazebzurati/minaret/issues) wisely. Please make sure there is no duplication and try your best to explain in detail and respectful manner.
+If there is any issue arise, please use the [issue tracker](https://github.com/fionix-software/minaret/issues) wisely. Please make sure there is no duplication and try your best to explain in detail and respectful manner.
 
 Please state your issue as shown below:
 - **Title**: Short brief what doesn't work / issue.

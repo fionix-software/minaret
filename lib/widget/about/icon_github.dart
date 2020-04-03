@@ -9,7 +9,7 @@ Widget iconGithub(BuildContext context) {
       color: Theme.of(context).primaryColor,
     ),
     onPressed: () async {
-      const String url = 'https://github.com/nazebzurati/minaret';
+      const String url = 'https://github.com/fionix-software/minaret';
       if (await canLaunch(url)) {
         await launch(url);
       }
