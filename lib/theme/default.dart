@@ -25,15 +25,15 @@ class DefaultThemeData {
     // text
     textTheme: TextTheme(
       // used for creating title and card time
-      title: TextStyle(
+      headline6: TextStyle(
         fontSize: titleTextSize,
       ),
       // used for list tile title
-      subhead: TextStyle(
+      subtitle1: TextStyle(
         fontSize: subheadTextSize,
       ),
       // used for common text
-      body1: TextStyle(
+      bodyText2: TextStyle(
         fontSize: bodyTextSize,
       ),
     ),
@@ -57,17 +57,17 @@ class DefaultThemeData {
     // text
     textTheme: TextTheme(
       // used for creating title and card time
-      title: TextStyle(
+      headline6: TextStyle(
         fontSize: titleTextSize,
         color: Colors.white,
       ),
       // used for common text
-      body1: TextStyle(
+      bodyText2: TextStyle(
         fontSize: bodyTextSize,
         color: Colors.white,
       ),
       // used for list tile title
-      subhead: TextStyle(
+      subtitle1: TextStyle(
         fontSize: subheadTextSize,
         color: Colors.white,
       ),

@@ -34,8 +34,7 @@ Widget buildTimeText(BuildContext context, String time) {
   return Text(
     time,
     style: TextStyle(
-      fontSize: Theme.of(context).textTheme.title.fontSize,
+      fontSize: Theme.of(context).textTheme.headline6.fontSize,
     ),
   );
 }
-//

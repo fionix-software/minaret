@@ -35,7 +35,7 @@ class ProgressScreen extends StatelessWidget {
               data.message,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: Theme.of(context).textTheme.subhead.fontSize,
+                fontSize: Theme.of(context).textTheme.subtitle1.fontSize,
                 color: Theme.of(context).primaryColor,
               ),
             ),
