@@ -45,7 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
             context,
             FontAwesomeIcons.cog,
             () {
-              Navigator.pushNamed(context, '/settings');
+              Navigator.pushNamed(context, '/settings').then((value) {
+                setState(() {});
+              });
             },
           ),
           buildIcon(

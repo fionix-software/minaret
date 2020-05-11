@@ -31,7 +31,7 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
         return;
       }
       // prayer time load success
-      yield PrayerTimeLoadSuccess(prayerTimeData);
+      yield PrayerTimeSuccess(prayerTimeData);
       return;
     } else if (event is PrayerTimeRefresh) {
       yield PrayerTimeRetrieving();
@@ -54,11 +54,11 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
         return;
       }
       for (PrayerTimeData data in retrieveZoneDataReturn) {
-        databaseItemPrayerTime.insert(data.toMap());
+        await databaseItemPrayerTime.insert(data.toMap());
       }
       // get prayer time data from database
       PrayerTimeData prayerTimeDataUpdated = await databaseItemPrayerTime.getPrayerTimeData(DateTime.now());
-      yield PrayerTimeLoadSuccess(prayerTimeDataUpdated);
+      yield PrayerTimeSuccess(prayerTimeDataUpdated);
       return;
     }
   }

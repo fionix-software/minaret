@@ -52,7 +52,7 @@ class _HomeControllerBlocState extends State<HomeControllerBloc> {
         builder: (BuildContext context, PrayerTimeState state) {
           if (state is PrayerTimeFailed) {
             return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.ERROR], retryCallback, state.message);
-          } else if (state is PrayerTimeLoadSuccess) {
+          } else if (state is PrayerTimeSuccess) {
             return HomeScreen(state.zoneData);
           } else if (state is PrayerTimeRetrieving) {
             return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.RETRIEVING], null);

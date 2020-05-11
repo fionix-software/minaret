@@ -57,7 +57,7 @@ class AboutScreen extends StatelessWidget {
               return Text(version);
             },
           ),
-          Text('Developed Fionix Software'),
+          Text('Developed by Fionix Software'),
           Text('Free and open source software'),
           buildSpaceSeparator(),
           buildTitle(context, 'Third Party Credit'),

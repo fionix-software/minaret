@@ -42,8 +42,14 @@ class PrayerZoneBloc extends Bloc<PrayerZoneEvent, PrayerZoneState> {
         yield PrayerZoneFailed(errorStatusEnumMap[ErrorStatusEnum.ERROR_RETRIEVE_ZONE_DATA]);
         return;
       }
-      // save zone data
+      // clear zone data
       DatabaseItemPrayerTime databaseItemPrayerTime = DatabaseItemPrayerTime();
+      bool clearPrayerTimeData = await databaseItemPrayerTime.clearPrayerTimeData();
+      if (!clearPrayerTimeData) {
+        yield PrayerZoneFailed(errorStatusEnumMap[ErrorStatusEnum.ERROR]);
+        return;
+      }
+      // save zone data
       for (PrayerTimeData data in retrieveZoneDataReturn) {
         databaseItemPrayerTime.insert(data.toMap());
       }
