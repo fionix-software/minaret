@@ -6,7 +6,7 @@ abstract class PrayerZoneState extends Equatable {
 
 // common
 
-class PrayerZoneLoading extends PrayerZoneState {
+class PrayerZoneRetrieving extends PrayerZoneState {
   @override
   List<Object> get props => [];
 }
@@ -23,10 +23,12 @@ class PrayerZoneFailed extends PrayerZoneState {
 // specific
 
 class PrayerZoneLoadSuccess extends PrayerZoneState {
+  final bool isFirstTime;
   final List<PrayerTimeZone> zone;
-  PrayerZoneLoadSuccess(this.zone);
+  PrayerZoneLoadSuccess(this.isFirstTime, this.zone);
   @override
   List<Object> get props => [
+        this.isFirstTime,
         this.zone,
       ];
 }

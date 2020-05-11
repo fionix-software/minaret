@@ -76,6 +76,25 @@ class DatabaseItemPrayerTime implements DatabaseItem {
     return null;
   }
 
+  // get prayer data from date
+  Future<bool> checkFirstTime() async {
+    Database db = await DatabaseHelper.getInstance.getDatabase(this);
+    // get prayer data
+    try {
+      var onValue = await db.query(
+        ptTable,
+      );
+      if (onValue != null && onValue.length > 0) {
+        return false;
+      }
+    } catch (e) {
+      databaseErrorMessageLog('db_data.getPrayerTimeData', e);
+      return true;
+    }
+    // error
+    return true;
+  }
+
   Future<bool> clearPrayerTimeData() async {
     Database db = await DatabaseHelper.getInstance.getDatabase(this);
     // clear all data

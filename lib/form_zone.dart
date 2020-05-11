@@ -10,8 +10,9 @@ import 'package:minaret/bloc/prayer_zone_bloc.dart';
 import 'package:minaret/model/pt_zone.dart';
 
 class ZoneScreen extends StatefulWidget {
+  final bool isFirstTime;
   final List<PrayerTimeZone> zoneList;
-  ZoneScreen(this.zoneList);
+  ZoneScreen(this.isFirstTime, this.zoneList);
 
   @override
   _ZoneScreenState createState() => _ZoneScreenState();
@@ -23,7 +24,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
     return buildScaffold(
       buildAppBar(
         context,
-        true,
+        !widget.isFirstTime,
         null,
       ),
       Column(

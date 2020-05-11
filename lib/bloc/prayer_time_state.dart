@@ -36,6 +36,12 @@ class PrayerTimeLoadSuccess extends PrayerTimeState {
       ];
 }
 
+class PrayerTimeNotInitialized extends PrayerTimeState {
+  PrayerTimeNotInitialized();
+  @override
+  List<Object> get props => [];
+}
+
 class PrayerTimeRefreshSuccess extends PrayerTimeState {
   final PrayerTimeData zoneData;
   PrayerTimeRefreshSuccess(this.zoneData);

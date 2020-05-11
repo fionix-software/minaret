@@ -40,10 +40,12 @@ class _HomeControllerBlocState extends State<HomeControllerBloc> {
   Widget build(BuildContext context) {
     return BlocListener<PrayerTimeBloc, PrayerTimeState>(
       listener: (BuildContext context, PrayerTimeState state) {
-        if (state is PrayerTimeLoadSuccess) {
-          if (state.zoneData == null) {
-            Navigator.pushReplacementNamed(context, '/zone');
-          }
+        if (state is PrayerTimeNotInitialized) {
+          Navigator.pushNamed(context, '/zone').then((value) {
+            setState(() {
+              BlocProvider.of<PrayerTimeBloc>(context).add(PrayerTimeLoad());
+            });
+          });
         }
       },
       child: BlocBuilder<PrayerTimeBloc, PrayerTimeState>(

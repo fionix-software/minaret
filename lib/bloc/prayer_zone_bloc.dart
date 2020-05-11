@@ -14,13 +14,13 @@ class PrayerZoneBloc extends Bloc<PrayerZoneEvent, PrayerZoneState> {
   ESolatRepository repo = ESolatRepository();
 
   @override
-  PrayerZoneState get initialState => PrayerZoneLoading();
+  PrayerZoneState get initialState => PrayerZoneRetrieving();
 
   @override
   Stream<PrayerZoneState> mapEventToState(PrayerZoneEvent event) async* {
     // loading
     lastEvent = event;
-    yield PrayerZoneLoading();
+    yield PrayerZoneRetrieving();
     // load prayer zone data
     if (event is PrayerZoneLoad) {
       // retrieve zone list
@@ -29,8 +29,11 @@ class PrayerZoneBloc extends Bloc<PrayerZoneEvent, PrayerZoneState> {
         yield PrayerZoneFailed(errorStatusEnumMap[ErrorStatusEnum.ERROR_RETRIEVE_ZONE_LIST]);
         return;
       }
+      // check first time
+      DatabaseItemPrayerTime databaseItemPrayerTime = DatabaseItemPrayerTime();
+      bool isFirstTime = await databaseItemPrayerTime.checkFirstTime();
       // prayer zone load sucess
-      yield PrayerZoneLoadSuccess(retrieveZoneReturn);
+      yield PrayerZoneLoadSuccess(isFirstTime, retrieveZoneReturn);
       return;
     } else if (event is PrayerZoneSet) {
       // retrieve zone data

@@ -69,7 +69,7 @@ class AboutScreen extends StatelessWidget {
           Text('Flutter Launcher Icon lib (MIT)'),
           buildSpaceSeparator(),
           buildTitle(context, 'Disclaimer'),
-          Text('All timetable data is hosted by JAKIM e-Solat portal.'),
+          Text('All prayer time data is hosted by JAKIM e-Solat portal.'),
         ],
       ),
     );

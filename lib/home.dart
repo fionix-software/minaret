@@ -27,16 +27,16 @@ class _HomeScreenState extends State<HomeScreen> {
         context,
         false,
         [
+          buildIcon(context, FontAwesomeIcons.mapMarker, () {
+            Navigator.pushNamed(context, '/zone').then((value) {
+              setState(() {
+                BlocProvider.of<PrayerTimeBloc>(context).add(PrayerTimeLoad());
+              });
+            });
+          }),
           buildIcon(
             context,
-            FontAwesomeIcons.mapMarker,
-            () {
-              Navigator.pushNamed(context, '/zone');
-            },
-          ),
-          buildIcon(
-            context,
-            FontAwesomeIcons.info,
+            FontAwesomeIcons.syncAlt,
             () async {
               BlocProvider.of<PrayerTimeBloc>(context).add(PrayerTimeRefresh());
             },

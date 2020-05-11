@@ -19,18 +19,15 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
 
   @override
   Stream<PrayerTimeState> mapEventToState(PrayerTimeEvent event) async* {
+    lastEvent = event;
     yield PrayerTimeLoading();
-    // register current event as last event
-    if (event is PrayerTimeLoad || event is PrayerTimeRefresh) {
-      lastEvent = event;
-    }
     // load prayer time data
     if (event is PrayerTimeLoad) {
       // get prayer time data from database
       DatabaseItemPrayerTime databaseItemPrayerTime = DatabaseItemPrayerTime();
       PrayerTimeData prayerTimeData = await databaseItemPrayerTime.getPrayerTimeData(DateTime.now());
       if (prayerTimeData == null) {
-        yield PrayerTimeFailed(errorStatusEnumMap[ErrorStatusEnum.ERROR_GET_SELECTED_ZONE_DATA]);
+        yield PrayerTimeNotInitialized();
         return;
       }
       // prayer time load success
@@ -42,7 +39,7 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
       DatabaseItemPrayerTime databaseItemPrayerTime = DatabaseItemPrayerTime();
       PrayerTimeData prayerTimeData = await databaseItemPrayerTime.getPrayerTimeData(DateTime.now());
       if (prayerTimeData == null) {
-        yield PrayerTimeFailed(errorStatusEnumMap[ErrorStatusEnum.ERROR_GET_SELECTED_ZONE_DATA]);
+        yield PrayerTimeNotInitialized();
         return;
       }
       // retrieve zone data
@@ -51,7 +48,7 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
         zoneState: prayerTimeData.zoneState,
         zoneRegion: prayerTimeData.zoneRegion,
       );
-      var retrieveZoneDataReturn = await ESolatRepository.retrieveZoneDataList(prayerTimeZone);
+      List<PrayerTimeData> retrieveZoneDataReturn = await ESolatRepository.retrieveZoneDataList(prayerTimeZone);
       if (retrieveZoneDataReturn == null || retrieveZoneDataReturn.isEmpty) {
         yield PrayerTimeFailed(errorStatusEnumMap[ErrorStatusEnum.ERROR_RETRIEVE_ZONE_DATA]);
         return;
@@ -61,11 +58,6 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
       }
       // get prayer time data from database
       PrayerTimeData prayerTimeDataUpdated = await databaseItemPrayerTime.getPrayerTimeData(DateTime.now());
-      if (prayerTimeDataUpdated == null) {
-        yield PrayerTimeFailed(errorStatusEnumMap[ErrorStatusEnum.ERROR_GET_SELECTED_ZONE_DATA]);
-        return;
-      }
-      // prayer time lload success
       yield PrayerTimeLoadSuccess(prayerTimeDataUpdated);
       return;
     }

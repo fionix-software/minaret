@@ -38,22 +38,17 @@ class _ZoneControllerBlocState extends State<ZoneControllerBloc> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PrayerZoneBloc, PrayerZoneState>(
-      listener: (BuildContext context, PrayerZoneState state) {
-        if (state is PrayerZoneSetSuccess) {
-          Navigator.pushReplacementNamed(context, '/home');
+    return BlocBuilder<PrayerZoneBloc, PrayerZoneState>(
+      builder: (BuildContext context, PrayerZoneState state) {
+        if (state is PrayerZoneLoadSuccess) {
+          return ZoneScreen(state.isFirstTime, state.zone);
+        } else if (state is PrayerZoneFailed) {
+          return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.ERROR], retryCallback, state.message);
+        } else if (state is PrayerZoneSetSuccess) {
+          return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.SUCCESS], null);
         }
+        return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.RETRIEVING], null);
       },
-      child: BlocBuilder<PrayerZoneBloc, PrayerZoneState>(
-        builder: (BuildContext context, PrayerZoneState state) {
-          if (state is PrayerZoneLoadSuccess) {
-            return ZoneScreen(state.zone);
-          } else if (state is PrayerZoneFailed) {
-            return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.ERROR], retryCallback, state.message);
-          }
-          return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.LOADING], null);
-        },
-      ),
     );
   }
 
