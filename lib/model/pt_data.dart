@@ -1,7 +1,8 @@
-class PrayerTimeData {
+import 'package:minaret/model/pt_zone.dart';
+
+class PrayerTimeData extends PrayerTimeZone {
   // field
   final String hijri;
-  final String zone;
   final String date;
   final String day;
   final String imsak;
@@ -14,8 +15,10 @@ class PrayerTimeData {
 
   // method
   PrayerTimeData({
+    String zoneCode,
+    String zoneState,
+    String zoneRegion,
     this.hijri,
-    this.zone,
     this.date,
     this.day,
     this.imsak,
@@ -25,12 +28,14 @@ class PrayerTimeData {
     this.asr,
     this.maghrib,
     this.isha,
-  });
+  }) : super(zoneCode: zoneCode, zoneState: zoneState, zoneRegion: zoneRegion);
 
   // from json to object
   factory PrayerTimeData.fromJson(Map<String, dynamic> parsedJson) => PrayerTimeData(
+        zoneCode: parsedJson['zoneCode'],
+        zoneState: parsedJson['zoneState'],
+        zoneRegion: parsedJson['zoneRegion'],
         hijri: parsedJson['hijri'],
-        zone: parsedJson['zone'],
         date: parsedJson['date'],
         day: parsedJson['day'],
         imsak: parsedJson['imsak'],
@@ -44,8 +49,10 @@ class PrayerTimeData {
 
   // from object to map
   Map<String, dynamic> toMap() => {
+        'zoneCode': this.zoneCode,
+        'zoneState': this.zoneState,
+        'zoneRegion': this.zoneRegion,
         'hijri': this.hijri,
-        'zone': this.zone,
         'date': this.date,
         'day': this.day,
         'imsak': this.imsak,

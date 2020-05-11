@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:minaret/controller/about.dart';
+import 'package:minaret/controller/home.dart';
+import 'package:minaret/controller/settings.dart';
+import 'package:minaret/controller/zone.dart';
 
-import 'package:minaret/about.dart';
-import 'package:minaret/home.dart';
 import 'package:minaret/logic/settings.dart';
-import 'package:minaret/settings.dart';
 import 'package:minaret/theme/default.dart';
-import 'package:minaret/zone.dart';
 
 void main() => runApp(MainApp());
 
@@ -22,10 +22,10 @@ class MainApp extends StatelessWidget {
           darkTheme: (snapshot.hasData && snapshot.data == THEME_LIGHT) ? DefaultThemeData.light : DefaultThemeData.dark,
           initialRoute: '/home',
           routes: {
-            '/home': (_) => HomePage(),
-            '/about': (_) => AboutPage(),
-            '/zone': (_) => ZonePage(),
-            '/settings': (_) => SettingsPage(),
+            '/home': (_) => HomeController(),
+            '/about': (_) => AboutController(),
+            '/zone': (_) => ZoneController(),
+            '/settings': (_) => SettingsController(),
           },
         );
       },

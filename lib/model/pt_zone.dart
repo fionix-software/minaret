@@ -1,31 +1,27 @@
 class PrayerTimeZone {
   // field
-  final String code;
-  final String state;
-  final String region;
-  final int isSelected;
+  final String zoneCode;
+  final String zoneState;
+  final String zoneRegion;
 
   // method
   PrayerTimeZone({
-    this.code,
-    this.state,
-    this.region,
-    this.isSelected,
+    this.zoneCode,
+    this.zoneState,
+    this.zoneRegion,
   });
 
   // factory
   factory PrayerTimeZone.fromJson(Map<String, dynamic> parsedJson) => PrayerTimeZone(
-        code: parsedJson['code'],
-        state: parsedJson['state'],
-        region: parsedJson['region'],
-        isSelected: parsedJson['isSelected'],
+        zoneCode: parsedJson['zoneCode'],
+        zoneState: parsedJson['zoneState'],
+        zoneRegion: parsedJson['zoneRegion'],
       );
 
   // from object to map
   Map<String, dynamic> toMap() => {
-        'code': this.code,
-        'state': this.state,
-        'region': this.region,
-        'isSelected': (this.isSelected == null) ? 0 : this.isSelected,
+        'zoneCode': this.zoneCode,
+        'zoneState': this.zoneState,
+        'zoneRegion': this.zoneRegion,
       };
 }

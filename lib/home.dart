@@ -1,74 +1,137 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:minaret/logic/common.dart';
-import 'package:minaret/logic/progress.dart';
-import 'package:minaret/screen/home.dart';
-import 'package:minaret/screen/progress.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:minaret/_reusable/widget/appbar.dart';
+import 'package:minaret/_reusable/widget/icon.dart';
+import 'package:minaret/_reusable/widget/scaffold.dart';
+import 'package:minaret/_reusable/widget/separator.dart';
+import 'package:minaret/_reusable/widget/title.dart';
 import 'package:minaret/bloc/prayer_time_bloc.dart';
+import 'package:minaret/logic/settings.dart';
+import 'package:minaret/logic/util.dart';
+import 'package:minaret/model/pt_data.dart';
 
-// page
-class HomePage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
+  final PrayerTimeData data;
+  HomeScreen(this.data);
+
   @override
-  State<StatefulWidget> createState() {
-    return HomePageState();
-  }
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) {
-        return PrayerTimeBloc();
-      },
-      child: HomePageContent(),
+    return buildScaffold(
+      buildAppBar(
+        context,
+        false,
+        [
+          buildIcon(
+            context,
+            FontAwesomeIcons.mapMarker,
+            () {
+              Navigator.pushNamed(context, '/zone');
+            },
+          ),
+          buildIcon(
+            context,
+            FontAwesomeIcons.info,
+            () async {
+              BlocProvider.of<PrayerTimeBloc>(context).add(PrayerTimeRefresh());
+            },
+          ),
+          buildIcon(
+            context,
+            FontAwesomeIcons.cog,
+            () {
+              Navigator.pushNamed(context, '/settings');
+            },
+          ),
+          buildIcon(
+            context,
+            FontAwesomeIcons.info,
+            () {
+              Navigator.pushNamed(context, '/about');
+            },
+          )
+        ],
+      ),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          buildCardHeader(
+            context,
+            widget.data.zoneState,
+            widget.data.zoneCode,
+            widget.data.date,
+            widget.data.hijri,
+            widget.data.zoneRegion,
+          ),
+          buildTimeCard(context, 'Imsak', widget.data.imsak),
+          buildTimeCard(context, 'Subuh', widget.data.fajr),
+          buildTimeCard(context, 'Syuruk', widget.data.syuruk),
+          buildTimeCard(context, 'Zohor', widget.data.dhuhr),
+          buildTimeCard(context, 'Asar', widget.data.asr),
+          buildTimeCard(context, 'Maghrib', widget.data.maghrib),
+          buildTimeCard(context, 'Isyak', widget.data.isha),
+        ],
+      ),
+      null,
     );
   }
-}
 
-// content
-class HomePageContent extends StatefulWidget {
-  @override
-  _HomePageContentState createState() => _HomePageContentState();
-}
-
-class _HomePageContentState extends State<HomePageContent> {
-  @override
-  void initState() {
-    BlocProvider.of<PrayerTimeBloc>(context).add(PrayerTimeLoad());
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<PrayerTimeBloc, PrayerTimeState>(
-      listener: (BuildContext context, PrayerTimeState state) {
-        if (state is PrayerTimeDataNotInitialized) {
-          Navigator.pushReplacementNamed(context, '/zone');
-        }
-      },
-      child: BlocBuilder<PrayerTimeBloc, PrayerTimeState>(
-        builder: (BuildContext context, PrayerTimeState state) {
-          if (state is PrayerTimeError) {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, state.errorMessage), retryCallback);
-          } else if (state is PrayerTimeLoadSuccess) {
-            return HomeScreen(state.zone, state.zoneData);
-          } else if (state is PrayerTimeRetrieving) {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_RETRIEVING));
-          } else if (state is PrayerTimeLoading || state is PrayerTimeDataNotInitialized) {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_LOADING));
-          } else {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]), retryCallback);
-          }
-        },
+  Widget buildCardHeader(BuildContext context, String state, String code, String date, String dateHijri, String region) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          buildTitle(context, dateHijri),
+          Text(date),
+          buildSpaceSeparator(),
+          buildTitle(context, state + " - " + code),
+          Text(region),
+          buildSpaceSeparator(),
+        ],
       ),
     );
   }
 
-  void retryCallback() {
-    PrayerTimeEvent lastEvent = BlocProvider.of<PrayerTimeBloc>(context).lastEvent;
-    if (lastEvent != null) {
-      BlocProvider.of<PrayerTimeBloc>(context).add(lastEvent);
-    }
+  Widget buildTimeCard(BuildContext context, String salatTime, String time) {
+    return Card(
+      margin: EdgeInsets.zero,
+      child: Container(
+        margin: EdgeInsets.only(bottom: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(salatTime),
+            FutureBuilder<bool>(
+              future: sharedPrefIs12HourFormat(),
+              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                if (snapshot.hasData) {
+                  String displayTime = time;
+                  if (snapshot.data) {
+                    displayTime = convert12HourTimeFormat(time);
+                  }
+                  return buildTimeText(context, displayTime);
+                }
+                return buildTimeText(context, 'n/a');
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildTimeText(BuildContext context, String time) {
+    return Text(
+      time,
+      style: TextStyle(
+        fontSize: Theme.of(context).textTheme.headline6.fontSize,
+      ),
+    );
   }
 }

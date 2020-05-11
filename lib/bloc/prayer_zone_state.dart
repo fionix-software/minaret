@@ -4,10 +4,23 @@ abstract class PrayerZoneState extends Equatable {
   const PrayerZoneState();
 }
 
+// common
+
 class PrayerZoneLoading extends PrayerZoneState {
   @override
   List<Object> get props => [];
 }
+
+class PrayerZoneFailed extends PrayerZoneState {
+  final String message;
+  PrayerZoneFailed(this.message);
+  @override
+  List<Object> get props => [
+        this.message,
+      ];
+}
+
+// specific
 
 class PrayerZoneLoadSuccess extends PrayerZoneState {
   final List<PrayerTimeZone> zone;
@@ -18,30 +31,7 @@ class PrayerZoneLoadSuccess extends PrayerZoneState {
       ];
 }
 
-class PrayerZoneRefreshSuccess extends PrayerZoneState {
-  final List<PrayerTimeZone> zone;
-  PrayerZoneRefreshSuccess(this.zone);
-  @override
-  List<Object> get props => [
-        this.zone,
-      ];
-}
-
 class PrayerZoneSetSuccess extends PrayerZoneState {
-  @override
-  List<Object> get props => [];
-}
-
-class PrayerZoneError extends PrayerZoneState {
-  final String errorMessage;
-  PrayerZoneError(this.errorMessage);
-  @override
-  List<Object> get props => [
-        this.errorMessage,
-      ];
-}
-
-class PrayerZoneUnknownState extends PrayerZoneState {
   @override
   List<Object> get props => [];
 }

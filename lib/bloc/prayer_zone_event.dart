@@ -10,15 +10,10 @@ class PrayerZoneLoad extends PrayerZoneEvent {
 }
 
 class PrayerZoneSet extends PrayerZoneEvent {
-  final String zoneCode;
-  PrayerZoneSet(this.zoneCode);
+  final PrayerTimeZone zone;
+  PrayerZoneSet(this.zone);
   @override
   List<Object> get props => [
-        this.zoneCode,
+        this.zone,
       ];
-}
-
-class PrayerZoneRefresh extends PrayerZoneEvent {
-  @override
-  List<Object> get props => [];
 }

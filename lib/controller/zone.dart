@@ -1,38 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:minaret/_reusable/logic/intermediate.dart';
+import 'package:minaret/_reusable/screen/intermediate.dart';
 import 'package:minaret/bloc/prayer_zone_bloc.dart';
-import 'package:minaret/logic/common.dart';
-import 'package:minaret/logic/progress.dart';
-import 'package:minaret/screen/progress.dart';
-import 'package:minaret/screen/zone.dart';
+import 'package:minaret/form_zone.dart';
 
-// Page
-class ZonePage extends StatefulWidget {
+class ZoneController extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return ZonePageState();
+    return ZoneControllerState();
   }
 }
 
-class ZonePageState extends State<ZonePage> {
+class ZoneControllerState extends State<ZoneController> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) {
         return PrayerZoneBloc();
       },
-      child: ZonePageContent(),
+      child: ZoneControllerBloc(),
     );
   }
 }
 
-// Content
-class ZonePageContent extends StatefulWidget {
+class ZoneControllerBloc extends StatefulWidget {
   @override
-  _ZonePageContentState createState() => _ZonePageContentState();
+  _ZoneControllerBlocState createState() => _ZoneControllerBlocState();
 }
 
-class _ZonePageContentState extends State<ZonePageContent> {
+class _ZoneControllerBlocState extends State<ZoneControllerBloc> {
   @override
   void initState() {
     BlocProvider.of<PrayerZoneBloc>(context).add(PrayerZoneLoad());
@@ -49,18 +46,12 @@ class _ZonePageContentState extends State<ZonePageContent> {
       },
       child: BlocBuilder<PrayerZoneBloc, PrayerZoneState>(
         builder: (BuildContext context, PrayerZoneState state) {
-          // zone loading
-          if (state is PrayerZoneError) {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, state.errorMessage), retryCallback);
-          } else if (state is PrayerZoneLoadSuccess) {
+          if (state is PrayerZoneLoadSuccess) {
             return ZoneScreen(state.zone);
-          } else if (state is PrayerZoneRefreshSuccess) {
-            return ZoneScreen(state.zone);
-          } else if (state is PrayerZoneLoading || state is PrayerZoneSetSuccess) {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_LOADING));
-          } else {
-            return ProgressScreen(getProgressData(ProgressEnum.PROGRESS_ERROR, errorStatusEnumMap[ErrorStatusEnum.ERROR_UNKNOWN_STATE]), retryCallback);
+          } else if (state is PrayerZoneFailed) {
+            return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.ERROR], retryCallback, state.message);
           }
+          return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.LOADING], null);
         },
       ),
     );

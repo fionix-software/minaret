@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:minaret/widget/about/icon_github.dart';
-import 'package:minaret/widget/about/icon_site.dart';
-import 'package:minaret/widget/separator.dart';
-import 'package:minaret/widget/title.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:minaret/_reusable/widget/appbar.dart';
+import 'package:minaret/_reusable/widget/icon.dart';
+import 'package:minaret/_reusable/widget/scaffold.dart';
+import 'package:minaret/_reusable/widget/separator.dart';
+import 'package:minaret/_reusable/widget/title.dart';
 import 'package:package_info/package_info.dart';
-import 'package:minaret/widget/appbar.dart';
-import 'package:minaret/widget/scaffold.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class AboutPage extends StatelessWidget {
+class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return buildScaffold(
@@ -15,8 +16,26 @@ class AboutPage extends StatelessWidget {
         context,
         true,
         [
-          iconGithub(context),
-          iconSite(context),
+          buildIcon(
+            context,
+            FontAwesomeIcons.globe,
+            () async {
+              final String url = 'https://fionix.net/';
+              if (await canLaunch(url)) {
+                await launch(url);
+              }
+            },
+          ),
+          buildIcon(
+            context,
+            FontAwesomeIcons.github,
+            () async {
+              final String url = 'https://github.com/fionix-software/minaret';
+              if (await canLaunch(url)) {
+                await launch(url);
+              }
+            },
+          ),
         ],
       ),
       buildContent(context),
@@ -38,7 +57,8 @@ class AboutPage extends StatelessWidget {
               return Text(version);
             },
           ),
-          Text('Open source software by Fionix'),
+          Text('Developed Fionix Software'),
+          Text('Free and open source software'),
           buildSpaceSeparator(),
           buildTitle(context, 'Third Party Credit'),
           Text('Varela Font (Open Font)'),
@@ -49,7 +69,7 @@ class AboutPage extends StatelessWidget {
           Text('Flutter Launcher Icon lib (MIT)'),
           buildSpaceSeparator(),
           buildTitle(context, 'Disclaimer'),
-          Text('All data only applicable for Malaysia only. All prayer time data is hosted by e-Solat portal. We doesn\'t collect any personal and sensitive data.'),
+          Text('All timetable data is hosted by JAKIM e-Solat portal.'),
         ],
       ),
     );

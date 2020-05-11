@@ -4,6 +4,19 @@ abstract class PrayerTimeState extends Equatable {
   const PrayerTimeState();
 }
 
+// common
+
+class PrayerTimeFailed extends PrayerTimeState {
+  final String message;
+  PrayerTimeFailed(this.message);
+  @override
+  List<Object> get props => [
+        this.message
+      ];
+}
+
+// specific
+
 class PrayerTimeLoading extends PrayerTimeState {
   @override
   List<Object> get props => [];
@@ -15,31 +28,19 @@ class PrayerTimeRetrieving extends PrayerTimeState {
 }
 
 class PrayerTimeLoadSuccess extends PrayerTimeState {
-  final PrayerTimeZone zone;
   final PrayerTimeData zoneData;
-  PrayerTimeLoadSuccess(this.zone, this.zoneData);
+  PrayerTimeLoadSuccess(this.zoneData);
   @override
   List<Object> get props => [
-        this.zone,
         this.zoneData,
       ];
 }
 
-class PrayerTimeError extends PrayerTimeState {
-  final String errorMessage;
-  PrayerTimeError(this.errorMessage);
+class PrayerTimeRefreshSuccess extends PrayerTimeState {
+  final PrayerTimeData zoneData;
+  PrayerTimeRefreshSuccess(this.zoneData);
   @override
   List<Object> get props => [
-        this.errorMessage
+        this.zoneData,
       ];
-}
-
-class PrayerTimeDataNotInitialized extends PrayerTimeState {
-  @override
-  List<Object> get props => [];
-}
-
-class PrayerTimeDataUnknownState extends PrayerTimeState {
-  @override
-  List<Object> get props => [];
 }
