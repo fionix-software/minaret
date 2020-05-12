@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:minaret/_reusable/logic/intermediate.dart';
-import 'package:minaret/_reusable/widget/appbar.dart';
-import 'package:minaret/_reusable/widget/scaffold.dart';
+import '../logic/intermediate.dart';
+import '../widget/appbar.dart';
+import '../widget/scaffold.dart';
 
 class IntermediateScreen extends StatelessWidget {
   final IntermediateScreenSettings settings;

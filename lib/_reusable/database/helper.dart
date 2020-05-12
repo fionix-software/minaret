@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:minaret/_reusable/config.dart';
-import 'package:minaret/_reusable/database/item.dart';
+import '../config.dart';
+import '../database/item.dart';
 
 typedef CreateFunction = Future<bool> Function(Database);
 

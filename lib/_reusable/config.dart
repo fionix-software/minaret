@@ -6,7 +6,7 @@ class Configuration {
 /* 
  * Version
  * -------
- * 20200512-1
+ * 20200512-2
  *
  * Language 
  * --------
@@ -19,10 +19,10 @@ class Configuration {
  * Dependencies
  * ------------
  * You need to add these packages into 'pubspec.yaml' file:- 
+ * - http
  * - sqflite
  * - path_provider
  * - font_awesome_flutter
- * - http
  * - flutter_launcher_icons
  * 
  * Please get the latest package version from 'https://pub.dev/'
