@@ -4,6 +4,7 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:minaret/_reusable/logic/util.dart';
 import 'package:minaret/logic/common.dart';
 import 'package:minaret/logic/util.dart';
 import 'package:minaret/model/pt_data.dart';

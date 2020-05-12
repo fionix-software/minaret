@@ -1,16 +1,6 @@
-import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 import 'package:minaret/logic/common.dart';
-
-// http get for catching socket exception
-Future<Response> httpGet(String url) async {
-  try {
-    return await get(url);
-  } catch (e) {
-    return null;
-  }
-}
 
 // fix time format
 String fixTimeFormat(String time) {

@@ -1,27 +1,13 @@
 enum ErrorStatusEnum {
-  OK,
-  ERROR,
-  ERROR_UNABLE_REACH_ESOLAT,
-  ERROR_GET_ZONE_LIST,
+  ERROR_RESET_DATA_FROM_DATABASE,
   ERROR_RETRIEVE_ZONE_LIST,
-  ERROR_SET_SELECTED_ZONE,
-  ERROR_GET_SELECTED_ZONE,
   ERROR_RETRIEVE_ZONE_DATA,
-  ERROR_GET_SELECTED_ZONE_DATA,
-  ERROR_UNKNOWN_STATE,
 }
 
 Map<ErrorStatusEnum, String> errorStatusEnumMap = {
-  ErrorStatusEnum.OK: 'Operation success.',
-  ErrorStatusEnum.ERROR: 'Common error happened.',
-  ErrorStatusEnum.ERROR_UNABLE_REACH_ESOLAT: 'Unable to reach e-Solat portal.',
-  ErrorStatusEnum.ERROR_GET_ZONE_LIST: 'Unable to get zone list from database.',
+  ErrorStatusEnum.ERROR_RESET_DATA_FROM_DATABASE: 'Unable to reset data from database.',
   ErrorStatusEnum.ERROR_RETRIEVE_ZONE_LIST: 'Unable to retrieve zone list from e-Solat.',
-  ErrorStatusEnum.ERROR_SET_SELECTED_ZONE: 'Unable to set selected zone to database.',
-  ErrorStatusEnum.ERROR_GET_SELECTED_ZONE: 'Unable to get selected zone from database.',
   ErrorStatusEnum.ERROR_RETRIEVE_ZONE_DATA: 'Unable to retrieve selected zone data from e-Solat.',
-  ErrorStatusEnum.ERROR_GET_SELECTED_ZONE_DATA: 'Unable to get selected zone data from database.',
-  ErrorStatusEnum.ERROR_UNKNOWN_STATE: 'Unknown state.',
 };
 
 Map<String, String> zoneCodeToStateMap = {
