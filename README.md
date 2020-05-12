@@ -1,6 +1,6 @@
 # Minaret
 
-Minaret is a minaretl cross platform e-Solat application. Minaret is a slender tower, typically part of a mosque, with a balcony from which a muezzin calls Muslims to prayer. e-Solat is a Malaysia prayer time portal and it is regulated by Falak Unit Jabatan Kemajuan Islam Malaysia (JAKIM).
+Minaret is a minimal cross platform e-Solat application. Minaret is a slender tower, typically part of a mosque, with a balcony from which a muezzin calls Muslims to prayer. e-Solat is a Malaysia prayer time portal and it is regulated by Falak Unit Jabatan Kemajuan Islam Malaysia (JAKIM).
 
 Minaret is a rebrand of Moments, starts from version 4. Its initial development is on 4 Feb 2017 and was first published on 6 Feb 2017. Minaret starts its development 14 Jan 2020 and first published on 23 Mar 2020.
 
