@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
+
 class Configuration {
   static const int DATABASE_VERSION = 2;
   static const String DATABASE_NAME = 'minaret';
+  static const Color flavorColor = Color.fromARGB(255, 39, 174, 96);
 }
 
 /* 

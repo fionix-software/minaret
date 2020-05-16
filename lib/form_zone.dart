@@ -9,22 +9,16 @@ import 'package:minaret/_reusable/widget/title.dart';
 import 'package:minaret/bloc/prayer_zone_bloc.dart';
 import 'package:minaret/model/pt_zone.dart';
 
-class ZoneScreen extends StatefulWidget {
+class ZoneScreen extends StatelessWidget {
   final bool isFirstTime;
   final List<PrayerTimeZone> zoneList;
   ZoneScreen(this.isFirstTime, this.zoneList);
 
-  @override
-  _ZoneScreenState createState() => _ZoneScreenState();
-}
-
-class _ZoneScreenState extends State<ZoneScreen> {
-  @override
   Widget build(BuildContext context) {
     return buildScaffold(
       buildAppBar(
         context,
-        !widget.isFirstTime,
+        !isFirstTime,
         null,
       ),
       Column(
@@ -33,7 +27,7 @@ class _ZoneScreenState extends State<ZoneScreen> {
           buildTitle(context, 'Please select your zone by your state\'s district.'),
           Text('Click on the icon on the right to select and proceed'),
           buildSpaceSeparator(),
-          buildListView(context, widget.zoneList),
+          buildListView(context, zoneList),
         ],
       ),
       null,

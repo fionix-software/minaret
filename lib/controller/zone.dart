@@ -5,14 +5,7 @@ import 'package:minaret/_reusable/screen/intermediate.dart';
 import 'package:minaret/bloc/prayer_zone_bloc.dart';
 import 'package:minaret/form_zone.dart';
 
-class ZoneController extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return ZoneControllerState();
-  }
-}
-
-class ZoneControllerState extends State<ZoneController> {
+class ZoneController extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -32,7 +25,7 @@ class ZoneControllerBloc extends StatefulWidget {
 class _ZoneControllerBlocState extends State<ZoneControllerBloc> {
   @override
   void initState() {
-    BlocProvider.of<PrayerZoneBloc>(context).add(PrayerZoneLoad());
+    BlocProvider.of<PrayerZoneBloc>(context).add(PrayerZoneRetrieve());
     super.initState();
   }
 

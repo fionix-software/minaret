@@ -4,7 +4,7 @@ abstract class PrayerZoneEvent extends Equatable {
   const PrayerZoneEvent();
 }
 
-class PrayerZoneLoad extends PrayerZoneEvent {
+class PrayerZoneRetrieve extends PrayerZoneEvent {
   @override
   List<Object> get props => [];
 }

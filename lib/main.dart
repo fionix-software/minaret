@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:minaret/_reusable/logic/shared_preference.dart';
+import 'package:minaret/_reusable/logic/theme.dart';
 import 'package:minaret/controller/about.dart';
+import 'package:minaret/controller/calendar.dart';
 import 'package:minaret/controller/home.dart';
 import 'package:minaret/controller/settings.dart';
 import 'package:minaret/controller/zone.dart';
-
-import 'package:minaret/logic/settings.dart';
-import 'package:minaret/theme/default.dart';
 
 void main() => runApp(MainApp());
 
@@ -25,6 +25,7 @@ class MainApp extends StatelessWidget {
             '/home': (_) => HomeController(),
             '/about': (_) => AboutController(),
             '/zone': (_) => ZoneController(),
+            '/calendar': (_) => CalendarController(),
             '/settings': (_) => SettingsController(),
           },
         );

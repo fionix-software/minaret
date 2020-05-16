@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
+import '../config.dart';
+
 const double titleTextSize = 20.0;
 const double subheadTextSize = 16.0;
 const double bodyTextSize = 12.0;
-
-const Color defaultPrimaryColor = Color.fromARGB(255, 39, 174, 96);
+const String fontFamily = 'Varela';
 
 class DefaultThemeData {
   // light
   static final ThemeData light = ThemeData(
     // app
-    fontFamily: 'Varela',
-    primaryColor: defaultPrimaryColor,
+    fontFamily: fontFamily,
+    primaryColor: Configuration.flavorColor,
     scaffoldBackgroundColor: Colors.white,
     // app bar
     appBarTheme: AppBarTheme(
@@ -46,8 +47,8 @@ class DefaultThemeData {
   // dark
   static final ThemeData dark = ThemeData(
     // app
-    fontFamily: 'Varela',
-    primaryColor: defaultPrimaryColor,
+    fontFamily: fontFamily,
+    primaryColor: Configuration.flavorColor,
     scaffoldBackgroundColor: Colors.black,
     // app bar
     appBarTheme: AppBarTheme(

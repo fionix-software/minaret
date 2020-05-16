@@ -22,7 +22,7 @@ class PrayerZoneBloc extends Bloc<PrayerZoneEvent, PrayerZoneState> {
     lastEvent = event;
     yield PrayerZoneRetrieving();
     // load prayer zone data
-    if (event is PrayerZoneLoad) {
+    if (event is PrayerZoneRetrieve) {
       // retrieve zone list
       List<PrayerTimeZone> retrieveZoneReturn = await ESolatRepository.retrieveZoneList();
       if (retrieveZoneReturn == null) {

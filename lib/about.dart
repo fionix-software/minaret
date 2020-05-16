@@ -67,6 +67,7 @@ class AboutScreen extends StatelessWidget {
           Text('Equatable lib (MIT)'),
           Text('Flutter Bloc lib (MIT)'),
           Text('Flutter Launcher Icon lib (MIT)'),
+          Text('Table Calendar (Apache 2.0)'),
           buildSpaceSeparator(),
           buildTitle(context, 'Disclaimer'),
           Text('All prayer time data is hosted by JAKIM e-Solat portal.'),

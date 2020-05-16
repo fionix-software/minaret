@@ -5,14 +5,7 @@ import 'package:minaret/_reusable/screen/intermediate.dart';
 import 'package:minaret/home.dart';
 import 'package:minaret/bloc/prayer_time_bloc.dart';
 
-class HomeController extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return HomeControllerState();
-  }
-}
-
-class HomeControllerState extends State<HomeController> {
+class HomeController extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

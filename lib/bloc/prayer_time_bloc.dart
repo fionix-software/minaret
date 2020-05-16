@@ -25,7 +25,8 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
     if (event is PrayerTimeLoad) {
       // get prayer time data from database
       DatabaseItemPrayerTime databaseItemPrayerTime = DatabaseItemPrayerTime();
-      PrayerTimeData prayerTimeData = await databaseItemPrayerTime.getPrayerTimeData(DateTime.now());
+      DateTime selectedDate = event.loadDate == null ? DateTime.now() : event.loadDate;
+      PrayerTimeData prayerTimeData = await databaseItemPrayerTime.getPrayerTimeData(selectedDate);
       if (prayerTimeData == null) {
         yield PrayerTimeNotInitialized();
         return;
@@ -37,17 +38,11 @@ class PrayerTimeBloc extends Bloc<PrayerTimeEvent, PrayerTimeState> {
       yield PrayerTimeRetrieving();
       // get prayer time data from database
       DatabaseItemPrayerTime databaseItemPrayerTime = DatabaseItemPrayerTime();
-      PrayerTimeData prayerTimeData = await databaseItemPrayerTime.getPrayerTimeData(DateTime.now());
-      if (prayerTimeData == null) {
+      PrayerTimeZone prayerTimeZone = await databaseItemPrayerTime.getPrayerTimeZone();
+      if (prayerTimeZone == null) {
         yield PrayerTimeNotInitialized();
         return;
       }
-      // retrieve zone data
-      PrayerTimeZone prayerTimeZone = PrayerTimeZone(
-        zoneCode: prayerTimeData.zoneCode,
-        zoneState: prayerTimeData.zoneState,
-        zoneRegion: prayerTimeData.zoneRegion,
-      );
       List<PrayerTimeData> retrieveZoneDataReturn = await ESolatRepository.retrieveZoneDataList(prayerTimeZone);
       if (retrieveZoneDataReturn == null || retrieveZoneDataReturn.isEmpty) {
         yield PrayerTimeFailed(errorStatusEnumMap[ErrorStatusEnum.ERROR_RETRIEVE_ZONE_DATA]);

@@ -41,6 +41,16 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocProvider.of<PrayerTimeBloc>(context).add(PrayerTimeRefresh());
             },
           ),
+          buildIcon(context, FontAwesomeIcons.calendarDay, () {
+            Navigator.pushNamed(context, '/calendar').then((value) {
+              setState(() {
+                // only if return value from calendar is in DateTime
+                if (value is DateTime) {
+                  BlocProvider.of<PrayerTimeBloc>(context).add(PrayerTimeLoad(value));
+                }
+              });
+            });
+          }),
           buildIcon(
             context,
             FontAwesomeIcons.cog,
@@ -89,8 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          buildTitle(context, dateHijri),
-          Text(date),
+          buildTitle(context, date),
+          Text(dateHijri),
           buildSpaceSeparator(),
           buildTitle(context, state + " - " + code),
           Text(region),

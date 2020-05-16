@@ -2,46 +2,47 @@ import 'package:intl/intl.dart';
 import 'package:minaret/_reusable/database/helper.dart';
 import 'package:minaret/_reusable/database/item.dart';
 import 'package:minaret/_reusable/database/util.dart';
+import 'package:minaret/model/pt_zone.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:minaret/model/pt_data.dart';
 
 class DatabaseItemPrayerTime implements DatabaseItem {
   // table information
-  final String ptTable = '_prayer_time_data';
-  final String ptId = 'id';
-  final String ptDate = 'date';
-  final String ptZoneCode = 'zoneCode';
-  final String ptZoneState = 'zoneState';
-  final String ptZoneRegion = 'zoneRegion';
-  final String ptHijri = 'hijri';
-  final String ptDay = 'day';
-  final String ptImsak = 'imsak';
-  final String ptFajr = 'fajr';
-  final String ptSyuruk = 'syuruk';
-  final String ptDhuhr = 'dhuhr';
-  final String ptAsr = 'asr';
-  final String ptMaghrib = 'maghrib';
-  final String ptIsha = 'isha';
+  final String _ptTable = '_prayer_time_data';
+  final String _ptId = 'id';
+  final String _ptDate = 'date';
+  final String _ptZoneCode = 'zoneCode';
+  final String _ptZoneState = 'zoneState';
+  final String _ptZoneRegion = 'zoneRegion';
+  final String _ptHijri = 'hijri';
+  final String _ptDay = 'day';
+  final String _ptImsak = 'imsak';
+  final String _ptFajr = 'fajr';
+  final String _ptSyuruk = 'syuruk';
+  final String _ptDhuhr = 'dhuhr';
+  final String _ptAsr = 'asr';
+  final String _ptMaghrib = 'maghrib';
+  final String _ptIsha = 'isha';
 
   // for table creation
   Future<bool> create(Database db) async {
     try {
       await db.execute('''
-      CREATE TABLE $ptTable (
-        $ptId INTEGER PRIMARY KEY,
-        $ptDate TEXT,
-        $ptZoneCode TEXT,
-        $ptZoneState TEXT,
-        $ptZoneRegion TEXT,
-        $ptHijri TEXT,
-        $ptDay TEXT,
-        $ptImsak TEXT,
-        $ptFajr TEXT,
-        $ptSyuruk TEXT,
-        $ptDhuhr TEXT,
-        $ptAsr TEXT,
-        $ptMaghrib TEXT,
-        $ptIsha TEXT
+      CREATE TABLE $_ptTable (
+        $_ptId INTEGER PRIMARY KEY,
+        $_ptDate TEXT,
+        $_ptZoneCode TEXT,
+        $_ptZoneState TEXT,
+        $_ptZoneRegion TEXT,
+        $_ptHijri TEXT,
+        $_ptDay TEXT,
+        $_ptImsak TEXT,
+        $_ptFajr TEXT,
+        $_ptSyuruk TEXT,
+        $_ptDhuhr TEXT,
+        $_ptAsr TEXT,
+        $_ptMaghrib TEXT,
+        $_ptIsha TEXT
       );
     ''');
     } catch (e) {
@@ -49,6 +50,40 @@ class DatabaseItemPrayerTime implements DatabaseItem {
       return false;
     }
     return true;
+  }
+
+  Future<PrayerTimeZone> getPrayerTimeZone() async {
+    Database db = await DatabaseHelper.getInstance.getDatabase(this);
+    // get prayer zone
+    try {
+      var onValue = await db.rawQuery('SELECT DISTINCT $_ptZoneCode, $_ptZoneRegion, $_ptZoneState FROM $_ptTable');
+      if (onValue != null || onValue.isNotEmpty) {
+        return PrayerTimeZone.fromJson(onValue[0]);
+      }
+    } catch (e) {
+      databaseErrorMessageLog('db_data.getPrayerTimeZone', e);
+      return null;
+    }
+    return null;
+  }
+
+  Future<List<String>> getDateList() async {
+    Database db = await DatabaseHelper.getInstance.getDatabase(this);
+    // get prayer zone
+    List<String> dateList = List<String>();
+    try {
+      var onValue = await db.rawQuery('SELECT $_ptDate FROM $_ptTable');
+      if (onValue != null || onValue.isNotEmpty) {
+        onValue.forEach((element) {
+          dateList.add(element['$_ptDate']);
+        });
+        return dateList;
+      }
+    } catch (e) {
+      databaseErrorMessageLog('db_data.getDateList', e);
+      return null;
+    }
+    return null;
   }
 
   // get prayer data from date
@@ -59,8 +94,8 @@ class DatabaseItemPrayerTime implements DatabaseItem {
     // get prayer data from date
     try {
       var onValue = await db.query(
-        ptTable,
-        where: '$ptDate=?',
+        _ptTable,
+        where: '$_ptDate=?',
         whereArgs: [
           dateStr,
         ],
@@ -82,7 +117,7 @@ class DatabaseItemPrayerTime implements DatabaseItem {
     // get prayer data
     try {
       var onValue = await db.query(
-        ptTable,
+        _ptTable,
       );
       if (onValue != null && onValue.length > 0) {
         return false;
@@ -99,7 +134,7 @@ class DatabaseItemPrayerTime implements DatabaseItem {
     Database db = await DatabaseHelper.getInstance.getDatabase(this);
     // clear all data
     try {
-      await db.delete(ptTable);
+      await db.delete(_ptTable);
     } catch (e) {
       databaseErrorMessageLog('db_data.clearPrayerTimeData.delete', e);
       return false;
@@ -113,8 +148,8 @@ class DatabaseItemPrayerTime implements DatabaseItem {
     // delete existing
     try {
       await db.delete(
-        ptTable,
-        where: '$ptDate=? AND $ptZoneCode=?',
+        _ptTable,
+        where: '$_ptDate=? AND $_ptZoneCode=?',
         whereArgs: [
           data['date'],
           data['zoneCode'],
@@ -126,7 +161,7 @@ class DatabaseItemPrayerTime implements DatabaseItem {
     }
     // insert new data
     try {
-      await db.insert(ptTable, data);
+      await db.insert(_ptTable, data);
     } catch (e) {
       databaseErrorMessageLog('db_data.insert.insert', e);
       return false;
