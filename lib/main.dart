@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:minaret/_reusable/logic/shared_preference.dart';
+import 'package:minaret/_reusable/logic/sharedpref.dart';
 import 'package:minaret/_reusable/logic/theme.dart';
 import 'package:minaret/controller/about.dart';
 import 'package:minaret/controller/calendar.dart';

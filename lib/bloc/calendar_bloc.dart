@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -31,7 +30,6 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       // converting date in string to datetime
       List<DateTime> dateTimeList = List<DateTime>();
       for (String dateStr in dateList) {
-        log(dateStr);
         dateTimeList.add(DateFormat('dd MMMM yyyy').parse(dateStr));
       }
       // sort

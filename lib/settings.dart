@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:minaret/_reusable/logic/shared_preference.dart';
+import 'package:minaret/_reusable/logic/intermediate.dart';
+import 'package:minaret/_reusable/logic/sharedpref.dart';
+import 'package:minaret/_reusable/screen/intermediate.dart';
 import 'package:minaret/_reusable/widget/appbar.dart';
 import 'package:minaret/_reusable/widget/scaffold.dart';
 import 'package:minaret/_reusable/widget/separator.dart';
 import 'package:minaret/_reusable/widget/settings.dart';
 import 'package:minaret/_reusable/widget/title.dart';
-import 'package:minaret/logic/settings.dart';
+import 'package:minaret/logic/sharedpref.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -106,6 +108,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   setState(() {});
                 },
               );
+            },
+          ),
+          // reset tutorial theme
+          buildEmptySettingsItem(
+            context,
+            'Tutorial',
+            'Click here to display tutorial at home screen',
+            false,
+            () async {
+              bool status = await sharedPrefTutorialHomeScreenResetComplete();
+              if (status) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => IntermediateScreen(intermediateSettingsMap[IntermediateEnum.SUCCESS], null),
+                  ),
+                );
+              }
             },
           ),
         ],

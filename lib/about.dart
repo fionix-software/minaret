@@ -66,6 +66,7 @@ class AboutScreen extends StatelessWidget {
           Text('SQFLite lib (MIT)'),
           Text('Equatable lib (MIT)'),
           Text('Flutter Bloc lib (MIT)'),
+          Text('TutorialCoachMark (MIT)'),
           Text('Flutter Launcher Icon lib (MIT)'),
           Text('Table Calendar (Apache 2.0)'),
           buildSpaceSeparator(),
