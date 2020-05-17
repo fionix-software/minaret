@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:minaret/_reusable/logic/sharedpref.dart';
 import 'package:minaret/_reusable/widget/appbar.dart';
 import 'package:minaret/_reusable/widget/icon.dart';
 import 'package:minaret/_reusable/widget/scaffold.dart';
 import 'package:minaret/_reusable/widget/separator.dart';
 import 'package:minaret/_reusable/widget/title.dart';
+import 'package:minaret/_reusable/widget/tutorial.dart';
 import 'package:minaret/bloc/prayer_time_bloc.dart';
 import 'package:minaret/logic/sharedpref.dart';
 import 'package:minaret/logic/util.dart';
@@ -125,7 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
           buildTimeCard(context, 'Isyak', widget.data.isha),
         ],
       ),
-      null,
     );
   }
 
@@ -182,56 +183,67 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  TargetFocus buildTargetFocus(GlobalKey componentKey, String titleStr, String subtitleStr) {
-    return TargetFocus(
-      keyTarget: componentKey,
-      contents: [
-        ContentTarget(
-          align: AlignContent.bottom,
-          child: Padding(
-            padding: EdgeInsets.all(30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                buildTitle(context, titleStr),
-                Text(subtitleStr),
-                buildSpaceSeparator(),
-                Text('Touch screen continue.'),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   void tutorialView() {
-    tutorialFocus.add(buildTargetFocus(
-      zoneIconKey,
-      'Set Zone',
-      'You can set your zone by your state\'s district.',
-    ));
-    tutorialFocus.add(buildTargetFocus(
-      refreshIconKey,
-      'Refresh Data',
-      'It will update prayer time data by re-retrieve prayer time data from JAKIM e-Solat portal.',
-    ));
-    tutorialFocus.add(buildTargetFocus(
-      calendarIconKey,
-      'Set Date',
-      'You can select certain date to view the date\'s prayer time.',
-    ));
-    tutorialFocus.add(buildTargetFocus(
-      settingsIconKey,
-      'Settings',
-      'You can customize application behavior. You can also reset the tutorial, so it will be displayed again. This tutorial is first-time only.',
-    ));
-    tutorialFocus.add(buildTargetFocus(
-      aboutIconKey,
-      'About',
-      'You can see application information and useful links.',
-    ));
+    tutorialFocus.add(
+      buildTargetFocus(
+        zoneIconKey,
+        <ContentTarget>[
+          buildContentTarget(
+            context,
+            'Set Zone',
+            'You can set your zone by your state\'s district.',
+          ),
+        ],
+      ),
+    );
+    tutorialFocus.add(
+      buildTargetFocus(
+        refreshIconKey,
+        <ContentTarget>[
+          buildContentTarget(
+            context,
+            'Refresh Data',
+            'It will update prayer time data by re-retrieve prayer time data from JAKIM e-Solat portal.',
+          ),
+        ],
+      ),
+    );
+    tutorialFocus.add(
+      buildTargetFocus(
+        calendarIconKey,
+        <ContentTarget>[
+          buildContentTarget(
+            context,
+            'Set Date',
+            'You can select certain date to view the date\'s prayer time.',
+          ),
+        ],
+      ),
+    );
+    tutorialFocus.add(
+      buildTargetFocus(
+        settingsIconKey,
+        <ContentTarget>[
+          buildContentTarget(
+            context,
+            'Settings',
+            'You can customize application behavior. You can also reset the tutorial, so it will be displayed again. This tutorial is first-time only.',
+          ),
+        ],
+      ),
+    );
+    tutorialFocus.add(
+      buildTargetFocus(
+        aboutIconKey,
+        <ContentTarget>[
+          buildContentTarget(
+            context,
+            'About',
+            'You can see application information and useful links.',
+          ),
+        ],
+      ),
+    );
     TutorialCoachMark(
       context,
       targets: tutorialFocus,

@@ -48,9 +48,9 @@ class _HomeControllerBlocState extends State<HomeControllerBloc> {
           } else if (state is PrayerTimeSuccess) {
             return HomeScreen(state.zoneData);
           } else if (state is PrayerTimeRetrieving) {
-            return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.RETRIEVING], null);
+            return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.RETRIEVING]);
           }
-          return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.LOADING], null);
+          return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.LOADING]);
         },
       ),
     );

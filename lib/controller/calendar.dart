@@ -38,7 +38,7 @@ class _CalendarControllerBlocState extends State<CalendarControllerBloc> {
         } else if (state is CalendarLoadFailed) {
           return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.ERROR], retryCallback, state.message);
         }
-        return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.LOADING], null);
+        return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.LOADING]);
       },
     );
   }

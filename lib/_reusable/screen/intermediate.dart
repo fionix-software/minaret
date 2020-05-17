@@ -7,7 +7,7 @@ class IntermediateScreen extends StatelessWidget {
   final IntermediateScreenSettings settings;
   final void Function() retryCallback;
   final String additionalMessage;
-  IntermediateScreen(this.settings, this.retryCallback, [this.additionalMessage]);
+  IntermediateScreen(this.settings, [this.retryCallback, this.additionalMessage]);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,6 @@ class IntermediateScreen extends StatelessWidget {
       buildAppBar(
         context,
         settings.isCloseEnabled,
-        null,
       ),
       Center(
         child: Padding(
@@ -46,7 +45,6 @@ class IntermediateScreen extends StatelessWidget {
           ),
         ),
       ),
-      null,
     );
   }
 }

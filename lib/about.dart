@@ -39,7 +39,6 @@ class AboutScreen extends StatelessWidget {
         ],
       ),
       buildContent(context),
-      null,
     );
   }
 

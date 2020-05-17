@@ -18,14 +18,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
   CalendarController _calendarController;
   DateTime selectedDate = DateTime.now();
 
-  // calendar library require init state
+  // calendar library requires init state
   @override
   void initState() {
     super.initState();
     _calendarController = CalendarController();
   }
 
-  // calendar library require dispose state
+  // calendar library requires dispose
   @override
   void dispose() {
     _calendarController.dispose();
@@ -38,7 +38,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
       buildAppBar(
         context,
         true,
-        null,
       ),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +64,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
           )
         ],
       ),
-      null,
     );
   }
 

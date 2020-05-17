@@ -9,7 +9,7 @@ class Configuration {
 /* 
  * Version
  * -------
- * 20200512-2
+ * 20200517-1
  *
  * Language 
  * --------
@@ -25,6 +25,7 @@ class Configuration {
  * - http
  * - sqflite
  * - path_provider
+ * - tutorial_coach_mark
  * - font_awesome_flutter
  * - flutter_launcher_icons
  * 

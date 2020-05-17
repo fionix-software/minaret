@@ -4,8 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:minaret/_reusable/widget/appbar.dart';
 import 'package:minaret/_reusable/widget/list.dart';
 import 'package:minaret/_reusable/widget/scaffold.dart';
-import 'package:minaret/_reusable/widget/separator.dart';
-import 'package:minaret/_reusable/widget/title.dart';
 import 'package:minaret/bloc/prayer_zone_bloc.dart';
 import 'package:minaret/model/pt_zone.dart';
 
@@ -19,37 +17,28 @@ class ZoneScreen extends StatelessWidget {
       buildAppBar(
         context,
         !isFirstTime,
-        null,
       ),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildTitle(context, 'Please select your zone by your state\'s district.'),
-          Text('Click on the icon on the right to select and proceed'),
-          buildSpaceSeparator(),
-          buildListView(context, zoneList),
-        ],
-      ),
-      null,
-    );
-  }
-
-  Widget buildListView(BuildContext context, List<PrayerTimeZone> list) {
-    return Expanded(
-      child: ListView.builder(
-        itemBuilder: (BuildContext context, int position) {
-          return buildCard(
-            context,
-            list.elementAt(position).zoneState + ' - ' + list.elementAt(position).zoneCode,
-            list.elementAt(position).zoneRegion,
-            FontAwesomeIcons.chevronRight,
-            false,
-            () async {
-              BlocProvider.of<PrayerZoneBloc>(context).add(PrayerZoneSet(list.elementAt(position)));
-            },
-          );
-        },
-        itemCount: list.length,
+      buildListView(
+        context,
+        'Please select your zone by your state\'s district.',
+        'Click on the icon on the right to select and proceed',
+        zoneList.isEmpty,
+        ListView.builder(
+          itemBuilder: (BuildContext context, int position) {
+            return buildCard(
+              context,
+              zoneList.elementAt(position).zoneState + ' - ' + zoneList.elementAt(position).zoneCode,
+              zoneList.elementAt(position).zoneRegion,
+              FontAwesomeIcons.chevronRight,
+              false,
+              () async {
+                BlocProvider.of<PrayerZoneBloc>(context).add(PrayerZoneSet(zoneList.elementAt(position)));
+              },
+            );
+          },
+          itemCount: zoneList.length,
+        ),
+        'Retrieved zone list is empty!',
       ),
     );
   }

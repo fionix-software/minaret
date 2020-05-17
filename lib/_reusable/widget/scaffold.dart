@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Scaffold buildScaffold(AppBar appBar, Widget scaffoldBody, GlobalKey<ScaffoldState> globalKey) {
+Scaffold buildScaffold(AppBar appBar, Widget scaffoldBody, [GlobalKey<ScaffoldState> globalKey]) {
   return Scaffold(
     resizeToAvoidBottomPadding: false,
     key: globalKey,

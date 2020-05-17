@@ -38,9 +38,9 @@ class _ZoneControllerBlocState extends State<ZoneControllerBloc> {
         } else if (state is PrayerZoneFailed) {
           return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.ERROR], retryCallback, state.message);
         } else if (state is PrayerZoneSetSuccess) {
-          return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.SUCCESS], null);
+          return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.SUCCESS]);
         }
-        return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.RETRIEVING], null);
+        return IntermediateScreen(intermediateSettingsMap[IntermediateEnum.RETRIEVING]);
       },
     );
   }

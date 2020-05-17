@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import '../widget/appbar.dart';
-import '../widget/scaffold.dart';
-import '../widget/separator.dart';
-import '../widget/title.dart';
+import 'scaffold.dart';
+import 'separator.dart';
+import 'title.dart';
 
-Widget buildForm(BuildContext context, String title, String subtitle, IconData yesButtonIcon, void Function() yesButtonCallback, IconData noButtonIcon, void Function() noButtonCallback) {
+Widget buildForm(BuildContext context, AppBar appBar, String title, String subtitle, IconData yesButtonIcon, void Function() yesButtonCallback, IconData noButtonIcon, void Function() noButtonCallback) {
   return buildScaffold(
-    buildAppBar(
-      context,
-      false,
-      null,
-    ),
+    appBar,
     Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -38,6 +33,5 @@ Widget buildForm(BuildContext context, String title, String subtitle, IconData y
         )
       ],
     ),
-    null,
   );
 }
