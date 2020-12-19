@@ -28,40 +28,32 @@ flutter run
 flutter run --release
 ```
 
+# Formatting
+
+Flutter already have implemented effective code style checker, which means less human job in standardizing the code style. For now, the only exceptions are stated as below:
+- Disable dartfmt's line length by set it to value 0
+
+# Branching
+
+Branching format is **type**/**change-title**. Type is only applicable to feature and fix. Pull request is considered a feature branch. Make sure your title consists of 2 to 5 word sentence. The title should be clear and meaningful. Use '-' to substitute the space between word, and not '\_'. Branch name should be singular for both type and change title.
+
 # Support
 
 If there is any issue arise, please use the [issue tracker](https://github.com/fionix-software/minaret/issues) wisely. Please make sure there is no duplication and try your best to explain in detail and respectful manner.
 
 Please state your issue as shown below:
-- **Title**: Short brief what doesn't work / issue.
-- **Description**: Detail on what is the issue.
-- **Steps to Reproduce**: Clearly and chronologically.
-- **Expectation**: How would you think it should behave / work.
-- **Platform Info**: Please provide your platform (Android / Linux desktop / etc.) and platform model along with its brand (Apple iPhone 11 / Google Pixel 4 / etc.).
-
-Currently Fionix only consist of one person. You can find him on twitter, [@NazebZurati](https://twitter.com/NazebZurati). If there are any concerns, please let him know.
-
-# Convention and branching
-
-Flutter already have implemented effective code style checker, which means less human job in standardizing the code style. For now, the only exceptions are stated as below:
-- Disable dartfmt's line length by set it to value 0
-
-However, implementation of design patterns and best practices in the source code is welcome but make sure it do more benefit than do harm.
-
-Branching format is **type**/**change-title**. Type is only applicable to feature and fix. Pull request is considered a feature branch. Make sure your title consists of 2 to 5 word sentence. The title should be clear and meaningful. Use '-' to substitute the space between word, and not '\_'. Branch name should be singular for both type and change title.
-
-# Design philosophy
-
-Fionix is a brand of a collection of open source software and game title. One of the feature that required a brand to keep its consistency in its project with the brand owns design philosophy. Make sure to check with Fionix Design Philosophy (will be made public soon). You may provide edge cases, suggestions and report if something doesn't work out for the user-end perspective / user experience.
+- **Title**: Short brief of your feedback.
+- **Description**: Your full feedback.
+- **Steps to reproduce (for report issue only)**: Clearly and chronologically (numbered list is recommended)
+- **Expectation (for report issue only)**: Explain how would you think it should behave / work.
+- **Platform info (for report issue only)**: Device full model (e.g. Google Pixel 4, Huawei Honor 8x, etc.).
 
 # Contribution
 
 You can contribute in many ways. You don't have to contribute code and you can contribute by planning evens, design, write documentations, reviews, promotes and many more! Refer [here](https://opensource.guide/how-to-contribute/) for more. You can direct message the maintainer on twitter (as stated above) for inquiries.
 
-If you were to contribute to the project by code, please follow Github's Fork & Pull guide stated [here](https://reflectoring.io/github-fork-and-pull/). Make sure to update your forked repository to upstream before working on it, or at least before submitting the changes. After submitting the changes, please make a pull request and have a discussion. Make sure to follow the branching model.
+If you were to contribute to the project by code, please follow Github's Fork & Pull guide stated [here](https://reflectoring.io/github-fork-and-pull/). Make sure to update your forked repository to upstream before working on it, or at least before submitting the changes. After submitting the changes, please make a pull request and have a discussion.
 
 # License
 
-This software source code is licensed under GNU General Public License (GPL) v3.0. 
-
-You cannot use any Fionix's project and brand identity (including project name, project icon / logo, Fionix logo etc.) and please do respect the decision.
+This software source code is licensed under GNU General Public License (GPL) v3.0. You cannot use any Fionix's project and brand identity (including project name, project icon / logo, Fionix logo etc.) and please do respect the decision.
